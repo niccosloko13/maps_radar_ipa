@@ -19,4 +19,5 @@ targets:
     type: bundle.unit-test
     platform: iOS
     sources: [RelasBetaTests]
-    dependencies: [RelasBeta]
+    dependencies:
+      - target: RelasBeta
