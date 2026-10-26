@@ -1,5 +1,9 @@
 # Build report
 
-Workflow `.github/workflows/ios-sideload-build.yml` is manual-only, uses `macos-latest`, generates the Xcode project, builds `iphoneos arm64` with `CODE_SIGNING_ALLOWED=NO` and `CODE_SIGNING_REQUIRED=NO`, packages a real `Payload/RELAS.app` ZIP as `RELAS-unsigned.ipa`, validates it, and uploads `RELAS-sideload-build-<build_number>`.
+Final CI run: [40415947995](https://github.com/niccosloko13/maps_radar_ipa/actions/runs/40415947995), completed successfully on 2026-10-26 from commit `8452f0635e1222e59f88a926e97377bf3489219b`.
 
-Status: `CI_NOT_EXECUTED`. Therefore `RELAS.app`, arm64 verification, `RELAS-unsigned.ipa`, and successful preflight remain unproven and no false artifact was produced.
+The macOS runner installed XcodeGen, generated `RelasBeta.xcodeproj`, and built `RELAS.app` for `iphoneos` with `ARCHS=arm64`, `CODE_SIGNING_ALLOWED=NO`, and `CODE_SIGNING_REQUIRED=NO`. It then packaged `Payload/RELAS.app` into `RELAS-unsigned.ipa`, ran the IPA preflight, and uploaded artifact `RELAS-sideload-build-5`.
+
+The downloaded artifact was independently inspected: the IPA opens as a ZIP; it contains `Payload/RELAS.app/Info.plist` and `Payload/RELAS.app/RELAS`; `CFBundleExecutable` is `RELAS`; the executable is a device Mach-O arm64 binary; no additional application frameworks are required; and the preflight reports no absolute local paths or secrets.
+
+Focused portable regression tests passed locally: 33/33 Navigation Core, radar priority/suppression, route/camera, GPS-loss recovery, simulator, location-state, and telemetry tests. The iOS XCTest target remains available in `apps/ios/RelasBetaTests`; it is not part of the unsigned device packaging job and requires a macOS simulator runner to execute.

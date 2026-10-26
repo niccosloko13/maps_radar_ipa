@@ -1,1 +1,17 @@
-{"status":"NOT_RUN_CI_NOT_EXECUTED","payload":null,"architecture":null,"signing":"not_created","secrets_detected":null}
+{
+  "status": "PASS",
+  "workflow_run": 40415947995,
+  "artifact": "RELAS-sideload-build-5",
+  "ipa": "RELAS-unsigned.ipa",
+  "payload": "Payload/RELAS.app",
+  "info_plist": "Payload/RELAS.app/Info.plist",
+  "bundle_identifier": "com.relas.beta",
+  "bundle_executable": "RELAS",
+  "executable_present": true,
+  "architecture": "arm64",
+  "frameworks_required": [],
+  "signing": "unsigned_for_sideloadly",
+  "zip_opens": true,
+  "absolute_paths_detected": false,
+  "secrets_detected": false
+}
