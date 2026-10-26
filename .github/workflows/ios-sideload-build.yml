@@ -6,7 +6,8 @@ jobs:
   sideload:
     runs-on: macos-latest
     timeout-minutes: 30
-    env: { BUILD_NUMBER: ${{ github.run_number }} }
+    env:
+      BUILD_NUMBER: ${{ github.run_number }}
     steps:
       - uses: actions/checkout@v4
       - run: xcodebuild -version && swift --version && brew install xcodegen
