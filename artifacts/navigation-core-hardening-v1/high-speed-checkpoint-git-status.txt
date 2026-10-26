@@ -1,0 +1,39 @@
+﻿ M app/app.js
+ M app/navigation/intelligence.js
+ M app/navigation/road-runtime.js
+ M artifacts/location-precision-v2/debug-mobile.png
+ M artifacts/location-precision-v2/replay-mobile.png
+ M artifacts/map-ui-v3/desktop-v3.png
+ M artifacts/map-ui-v3/layers-v3.png
+ M artifacts/map-ui-v3/rain-fixture.png
+ M artifacts/map-ui-v3/urban-map.png
+ M artifacts/map-ui-v3/works-fixture.png
+ M artifacts/navigation-intelligence-v2/address.png
+ M artifacts/navigation-intelligence-v2/road-mode.png
+ M artifacts/navigation-intelligence-v2/road-reports.png
+ M artifacts/navigation-intelligence-v2/voice-settings.png
+ M artifacts/road-test-review/alert.png
+ M artifacts/road-test-review/desktop-map.png
+ M artifacts/road-test-review/detail-bump.png
+ M artifacts/road-test-review/detail-fixed.png
+ M artifacts/road-test-review/detail-signal.png
+ M artifacts/road-test-review/filters.png
+ M artifacts/road-test-review/mobile-375.png
+ M artifacts/road-test-review/mobile-390.png
+ M artifacts/road-test-review/mobile-412.png
+ M artifacts/road-test-review/mobile-430.png
+ M artifacts/road-test-review/mobile-driver.png
+ M artifacts/road-test-review/semaforos-map.png
+ M navigation_backend.py
+ M scripts/road-navigation-smoke.js
+ M test_navigation_intelligence.py
+?? artifacts/location-precision-v2/location-browser-smoke.json
+?? artifacts/map-ui-v3/map-ui-v3-smoke.json
+?? artifacts/navigation-core-hardening-v1/
+?? artifacts/navigation-intelligence-v2/navigation-intelligence-smoke.json
+?? artifacts/road-test-review/road-browser-smoke.json
+?? artifacts/road-test-review/road-navigation-smoke.json
+?? scripts/drive-simulator/
+?? scripts/navigation-hardening-visual.cjs
+?? tests/drive-simulator.test.cjs
+?? tests/fixtures/drive-simulator/

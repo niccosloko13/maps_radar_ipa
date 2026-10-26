@@ -1,0 +1,122 @@
+{
+  "errors": [],
+  "gps": {
+    "start": {
+      "watch": true,
+      "indicator": "GPS ativo · ±8 m"
+    },
+    "moving": {
+      "properties": {
+        "moving": true,
+        "heading": 270
+      },
+      "layer": 1,
+      "speed": "43"
+    },
+    "stopped": {
+      "moving": false,
+      "heading": 0
+    },
+    "badAccuracy": {
+      "unchanged": true,
+      "status": "GPS impreciso · procure um local aberto"
+    },
+    "missing": "GPS indisponível neste navegador",
+    "denied": "Localização negada · toque em localizar"
+  },
+  "driveViewports": [
+    {
+      "width": 375,
+      "height": 812,
+      "small": [],
+      "overflow": false,
+      "hudFits": true,
+      "alertBelowManeuver": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "small": [],
+      "overflow": false,
+      "hudFits": true,
+      "alertBelowManeuver": true
+    },
+    {
+      "width": 430,
+      "height": 932,
+      "small": [],
+      "overflow": false,
+      "hudFits": true,
+      "alertBelowManeuver": true
+    },
+    {
+      "width": 412,
+      "height": 915,
+      "small": [],
+      "overflow": false,
+      "hudFits": true,
+      "alertBelowManeuver": true
+    }
+  ],
+  "search": {
+    "status": 200,
+    "results": 7,
+    "label": "Terminal Paço São Bernardo do Campo, Centro, São Bernardo do Campo, São Paulo"
+  },
+  "route": {
+    "provider": "Valhalla demo 1",
+    "distance": 2153,
+    "steps": 11,
+    "alerts": 2,
+    "engine": "relas-map-v2"
+  },
+  "follow": {
+    "follow": false,
+    "recenter": true,
+    "center": [
+      -46.550095089920205,
+      -23.69075665390494
+    ],
+    "stayed": true
+  },
+  "intensities": {
+    "70": {
+      "intensity": "strong",
+      "text": "70 m"
+    },
+    "200": {
+      "intensity": "highlight",
+      "text": "200 m"
+    },
+    "450": {
+      "intensity": "attention",
+      "text": "450 m"
+    },
+    "1000": {
+      "intensity": "discreet",
+      "text": "1000 m"
+    }
+  },
+  "overspeed": true,
+  "direction": {
+    "oppositeSuppressed": true,
+    "unknownVisible": true
+  },
+  "routeSummary": "Um olhar para o caminho\n\n1 radar fixo\n\nLombadas: nenhum ponto conhecido\n\nSemáforos: nenhum ponto conhecido\n\nPedágios: nenhum ponto conhecido",
+  "reportOptions": 15,
+  "report": {
+    "bodyPresent": true,
+    "kind": "mobile",
+    "coordinatesValid": true
+  },
+  "updateSafety": {
+    "pending": true,
+    "stillDriving": true
+  },
+  "sw": {
+    "controller": "http://127.0.0.1:8815/sw.js",
+    "caches": [
+      "relas-v233-road-test"
+    ]
+  }
+}

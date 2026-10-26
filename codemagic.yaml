@@ -1,0 +1,21 @@
+workflows:
+  relas-ios-free-build:
+    name: RELAS iOS free build
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+    environment:
+      vars:
+        IOS_DIR: apps/ios
+        BUILD_NUMBER: $CM_BUILD_NUMBER
+    scripts:
+      - name: Generate project
+        script: brew install xcodegen && cd "$IOS_DIR" && xcodegen generate
+      - name: Simulator build and tests
+        script: scripts/ios/build-simulator.sh
+      - name: Device compile without signing
+        script: scripts/ios/build-device-nosign.sh
+      - name: Signing status
+        script: scripts/ios/export-ipa.sh || true
+    artifacts:
+      - artifacts/free-ios-build-v1/ci/**
+      - apps/ios/build/**

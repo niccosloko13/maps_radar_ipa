@@ -1,0 +1,93 @@
+{
+  "errors": [],
+  "expectedDiagnostics": 1,
+  "defaults": {
+    "mode": "baseline",
+    "telemetryActive": false,
+    "debug": false
+  },
+  "gps": {
+    "states": [
+      "ACQUIRING",
+      "ACQUIRING",
+      "TRACKING",
+      "TRACKING"
+    ],
+    "confidence": 0.9019296282520005,
+    "rawAccuracy": 8,
+    "match": "local-route-v2",
+    "rawAltitude": 700
+  },
+  "debug": {
+    "panel": true,
+    "rawLayer": true,
+    "candidates": true
+  },
+  "gap": {
+    "predicted": {
+      "state": "PREDICTING",
+      "confidence": 0.7896736904138649,
+      "visibleAlert": false
+    },
+    "lost": {
+      "state": "LOST",
+      "speed": null,
+      "position": [
+        -46.65451996979588,
+        -23.563
+      ]
+    }
+  },
+  "recovery": {
+    "state": "ACQUIRING",
+    "confidence": 0.6,
+    "records": 8
+  },
+  "replay": {
+    "deterministic": true,
+    "metrics": {
+      "fixCount": 6,
+      "acceptedFixes": 6,
+      "rejectedFixes": 0,
+      "outlierCount": 0,
+      "averageAccuracy": 8,
+      "medianAccuracy": 8,
+      "p95Accuracy": 8,
+      "averageProcessingMs": null,
+      "medianProcessingMs": null,
+      "p95ProcessingMs": null,
+      "stateTransitions": 4,
+      "timeTracking": 1996,
+      "timeDegraded": 0,
+      "timePredicting": 4000,
+      "timeLost": 1159,
+      "matchSuccessRate": 1,
+      "matchSwitchCount": 0,
+      "segmentSwitchCount": 0,
+      "backwardJumpCount": 0,
+      "implausibleSegmentSwitchCount": 0,
+      "lowConfidenceCount": 1,
+      "maxPredictionGap": 2500,
+      "averageDistanceToRoute": 0,
+      "medianDistanceToRoute": 0,
+      "p95DistanceToRoute": 0,
+      "positionErrorMean": null,
+      "positionErrorMedian": null,
+      "positionErrorP95": null,
+      "headingError": null,
+      "groundTruth": "not provided"
+    },
+    "visualActive": true,
+    "step": 3
+  },
+  "fallback": {
+    "state": "BASELINE_FALLBACK",
+    "position": true,
+    "diagnostics": 1
+  },
+  "bootstrapFallback": {
+    "working": true,
+    "loadFailureObserved": true,
+    "errors": []
+  }
+}

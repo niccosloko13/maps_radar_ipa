@@ -1,0 +1,220 @@
+{
+  "scenario": "same controlled Rua Rui Barbosa route and Playwright setup as prior validation",
+  "runs": [
+    {
+      "speed": 60,
+      "rawLocation": [
+        -46.4132,
+        -24.0131
+      ],
+      "matchedLocation": [
+        -46.4132,
+        -24.0131
+      ],
+      "displayLocation": [
+        -46.4132,
+        -24.0131
+      ],
+      "cameraTarget": [
+        -46.41287219195463,
+        -24.0131
+      ],
+      "cameraCenter": [
+        -46.41287219195465,
+        -24.01309999999998
+      ],
+      "zoom": 16.5,
+      "bearing": 90.00152095882311,
+      "pitch": 42,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "markerScreenX": 195.00117384342758,
+      "markerScreenY": 518.3616156058862,
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "markerVisible": true,
+      "cameraDuration": 200,
+      "lookAheadDistance": 66.66666666666667,
+      "navigationTiming": {
+        "gpsFixAgeMs": 0,
+        "receivedAt": 1401.5,
+        "locationEngineMs": 0.10000002384185791,
+        "routeMatchMs": 0.10000002384185791,
+        "projectionMs": 0.10000002384185791,
+        "markerRenderLagMs": 5.299999952316284,
+        "cameraLagMs": 228
+      },
+      "markerInSafeZone": true,
+      "timestampAfterSettle": 1793026371176,
+      "elapsedMs": 559
+    },
+    {
+      "speed": 80,
+      "rawLocation": [
+        -46.413160000000005,
+        -24.0131
+      ],
+      "matchedLocation": [
+        -46.413160000000005,
+        -24.0131
+      ],
+      "displayLocation": [
+        -46.413164900000005,
+        -24.0131
+      ],
+      "cameraTarget": [
+        -46.41272292260617,
+        -24.0131
+      ],
+      "cameraCenter": [
+        -46.41276023994328,
+        -24.01310000000001
+      ],
+      "zoom": 15.9,
+      "bearing": 90.00098862323502,
+      "pitch": 42,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "markerScreenX": 195.0006187212299,
+      "markerScreenY": 512.1478462738987,
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "markerVisible": true,
+      "cameraDuration": 120,
+      "lookAheadDistance": 88.88888888888889,
+      "navigationTiming": {
+        "gpsFixAgeMs": 0,
+        "receivedAt": 1975,
+        "locationEngineMs": 0,
+        "routeMatchMs": 0,
+        "projectionMs": 0,
+        "markerRenderLagMs": 11.299999952316284,
+        "cameraLagMs": 124.39999997615814
+      },
+      "markerInSafeZone": true,
+      "timestampAfterSettle": 1793026371619,
+      "elapsedMs": 396
+    },
+    {
+      "speed": 90,
+      "rawLocation": [
+        -46.413140000000006,
+        -24.0131
+      ],
+      "matchedLocation": [
+        -46.413140000000006,
+        -24.0131
+      ],
+      "displayLocation": [
+        -46.41314305025001,
+        -24.0131
+      ],
+      "cameraTarget": [
+        -46.412648287931944,
+        -24.0131
+      ],
+      "cameraCenter": [
+        -46.412676275934814,
+        -24.01310000000001
+      ],
+      "zoom": 15.9,
+      "bearing": 90.00064260510271,
+      "pitch": 42,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "markerScreenX": 195.00046525343373,
+      "markerScreenY": 516.3279040024996,
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "markerVisible": true,
+      "cameraDuration": 120,
+      "lookAheadDistance": 100,
+      "navigationTiming": {
+        "gpsFixAgeMs": 0,
+        "receivedAt": 2424.7000000476837,
+        "locationEngineMs": 0,
+        "routeMatchMs": 0,
+        "projectionMs": 0,
+        "markerRenderLagMs": 10,
+        "cameraLagMs": 123.39999997615814
+      },
+      "markerInSafeZone": true,
+      "timestampAfterSettle": 1793026372072,
+      "elapsedMs": 402
+    },
+    {
+      "speed": 100,
+      "rawLocation": [
+        -46.413120000000006,
+        -24.0131
+      ],
+      "matchedLocation": [
+        -46.413120000000006,
+        -24.0131
+      ],
+      "displayLocation": [
+        -46.413122823655634,
+        -24.0131
+      ],
+      "cameraTarget": [
+        -46.41257365325771,
+        -24.0131
+      ],
+      "cameraCenter": [
+        -46.412599308926985,
+        -24.01310000000001
+      ],
+      "zoom": 15.9,
+      "bearing": 90.00041769331688,
+      "pitch": 42,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "markerScreenX": 195.00034008370227,
+      "markerScreenY": 520.167696695669,
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "markerVisible": true,
+      "cameraDuration": 120,
+      "lookAheadDistance": 111.11111111111111,
+      "navigationTiming": {
+        "gpsFixAgeMs": 0,
+        "receivedAt": 2836.5,
+        "locationEngineMs": 0,
+        "routeMatchMs": 0,
+        "projectionMs": 0,
+        "markerRenderLagMs": 14.299999952316284,
+        "cameraLagMs": 127.79999995231628
+      },
+      "markerInSafeZone": true,
+      "timestampAfterSettle": 1793026372482,
+      "elapsedMs": 391
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "httpErrors": []
+}

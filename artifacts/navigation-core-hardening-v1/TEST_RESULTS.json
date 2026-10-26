@@ -1,0 +1,1 @@
+{"baseline":{"node_navigation_location":19},"search":{"python_navigation_backend":10},"simulator":{"node":1},"final":{"node_navigation_location_simulator":69,"python_navigation_backend":10,"selftest":"PASS","python_compile":"PASS","javascript_syntax":"PASS","git_diff_check":"PASS"},"browser_smoke":"BLOCKED_MISSING_PLAYWRIGHT"}

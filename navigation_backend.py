@@ -40,6 +40,10 @@ def address_query(value):
     return result
 
 
+# Explicit public name for the structured address parser.
+parseAddressQuery=address_query
+
+
 def distance(lat,lon,a,b):
     if lat is None or lon is None:return None
     return math.hypot((lon-b)*111320*math.cos(math.radians(lat)),(lat-a)*110540)
@@ -89,6 +93,13 @@ def search_address(query,http_request,ua,near_lat=None,near_lon=None,limit=7,sub
                 d=distance(near_lat,near_lon,lat,lon)
                 note='Área do CEP · confirme o trecho antes de iniciar' if parsed.get('postcode') else None if not requested or exact else 'Trecho aproximado · número não localizado'
                 items.append(dict(lat=lat,lon=lon,label=label,display_name=label,address=p,provider=provider,postal_source='viacep' if parsed.get('postcode') else None,type=p.get('type') or 'place',distance_m=round(d) if d is not None else None,requested_housenumber=requested,match_quality='house_number' if exact else 'approximate' if requested or parsed.get('postcode') else 'place',precision_note=note))
+                # UI state is explicit while match_quality remains compatible
+                # with the pre-hardening API contract.
+                candidate=items[-1]
+                same_street=folded(p.get('street') or p.get('name'))==folded(parsed.get('street'))
+                same_city=not parsed.get('city') or folded(p.get('city'))==folded(parsed.get('city'))
+                candidate['address_state']='EXACT_ADDRESS' if requested and exact and same_street and same_city else 'APPROXIMATE_NUMBER' if requested and same_street and same_city else 'STREET_ONLY' if same_street and same_city else 'FUZZY_ALTERNATIVE'
+                candidate['precision_label']={'EXACT_ADDRESS':'Número exato','APPROXIMATE_NUMBER':'Número aproximado','STREET_ONLY':'Rua localizada','FUZZY_ALTERNATIVE':'Sugestão alternativa'}[candidate['address_state']]
         except (OSError,ValueError,TypeError):
             return
     if submitted and any(k in parsed for k in ['street','postcode','district']):
@@ -96,9 +107,14 @@ def search_address(query,http_request,ua,near_lat=None,near_lon=None,limit=7,sub
     if not items or (parsed.get('housenumber') and not any(i['match_quality']=='house_number' for i in items)):
         collect('api',{**common,'q':parsed['query']},'photon')
     def rank(r):
-        city=folded(r['address'].get('city'));wanted=folded(parsed.get('city'))
-        postal=not parsed.get('postcode') or re.sub(r'\D','',str(r['address'].get('postcode','')))==re.sub(r'\D','',parsed['postcode'])
-        return (0 if postal else 1,0 if not parsed.get('housenumber') or r['match_quality']=='house_number' else 1,0 if not wanted or city==wanted else 1,r['distance_m'] if r['distance_m'] is not None else 1e12,len(r['label']))
+        p=r['address'];street=folded(p.get('street') or p.get('name'));wanted_street=folded(parsed.get('street'));city=folded(p.get('city'));wanted_city=folded(parsed.get('city'));number=folded(p.get('housenumber'));wanted_number=folded(parsed.get('housenumber'));score=0
+        # Exact street + city + number has a higher, explainable score than a
+        # fuzzy provider result. Distance only breaks a score tie.
+        score+=100 if wanted_street and street==wanted_street else 20 if wanted_street and street.startswith(wanted_street) else -80 if wanted_street else 0
+        score+=60 if wanted_city and city==wanted_city else -120 if wanted_city else 0
+        score+=80 if wanted_number and number==wanted_number else 15 if wanted_number and street==wanted_street else 0
+        if parsed.get('postcode') and re.sub(r'\D','',str(p.get('postcode','')))==re.sub(r'\D','',parsed['postcode']):score+=30
+        return (-score,r['distance_m'] if r['distance_m'] is not None else 1e12,r['label'])
     return sorted(items,key=rank)[:max(1,min(8,int(limit)))]
 
 

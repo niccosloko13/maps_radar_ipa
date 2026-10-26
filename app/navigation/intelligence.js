@@ -15,7 +15,7 @@
   snapshot(){return{mode:this.mode,override:this.override,pending:this.pending,pendingAt:this.pendingAt}}
   restore(s){Object.assign(this,structuredClone(s))}
  }
- function cameraPolicy(mode,speed,distanceToTurn,viewportHeight=844){const road=mode==='ROAD_MODE',v=Math.max(0,speed||0);return{zoom:road?(distanceToTurn<250?16.4:v>25?15.3:15.8):(distanceToTurn<120?17: N.cameraZoom(v)),pitch:road?48:v>3?42:20,padding:{top:Math.round(viewportHeight*(road?.40:.27)),bottom:Math.round(viewportHeight*.12),left:0,right:0},duration:450,lookAheadMetres:road?Math.min(160,v*4):Math.min(65,v*2)}}
+ function cameraPolicy(mode,speed,distanceToTurn,viewportHeight=844){const road=mode==='ROAD_MODE',v=Math.max(0,speed||0),duration=v>100/3.6?75:v>60/3.6?120:v>20/3.6?200:300;return{zoom:road?(distanceToTurn<250?16.4:v>25?15.3:15.8):(distanceToTurn<120?17: N.cameraZoom(v)),pitch:road?48:v>3?42:20,padding:{top:Math.round(viewportHeight*(road?.40:.27)),bottom:Math.round(viewportHeight*.12),left:0,right:0},duration,lookAheadMetres:road?Math.min(160,v*4):Math.min(65,v*2)}}
  class Progress{
   reset(){this.along=0;this.at=null;this.initialized=false;this.version=null;this.segmentIndex=0}
   constructor(){this.reset()}

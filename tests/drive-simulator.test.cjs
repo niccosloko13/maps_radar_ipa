@@ -1,0 +1,2 @@
+const test=require('node:test'),assert=require('node:assert/strict'),{run,scenarios}=require('../scripts/drive-simulator/simulator.cjs');
+test('drive simulator scenarios are deterministic and preserve GPS loss recovery',()=>{for(const [name,config] of Object.entries(scenarios)){const a=run(name,config),b=run(name,config);assert.equal(a.routeCompleted,true);assert.deepEqual(a.metrics.cameraLagMs,b.metrics.cameraLagMs)}assert.ok(run('gps-loss',scenarios['gps-loss']).gpsRecoveries>0)});

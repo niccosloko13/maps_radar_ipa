@@ -1,0 +1,22 @@
+name: RelasBeta
+options:
+  deploymentTarget:
+    iOS: "16.0"
+targets:
+  RelasBeta:
+    type: application
+    platform: iOS
+    sources: [RelasBeta]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.relas.beta
+        PRODUCT_NAME: RELAS
+        INFOPLIST_FILE: RelasBeta/Info.plist
+        SWIFT_VERSION: "5.9"
+        CURRENT_PROJECT_VERSION: "1"
+        MARKETING_VERSION: "0.1.0"
+  RelasBetaTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [RelasBetaTests]
+    dependencies: [RelasBeta]

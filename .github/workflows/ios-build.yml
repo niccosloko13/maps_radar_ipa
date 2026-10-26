@@ -1,0 +1,41 @@
+name: RELAS iOS free build
+on:
+  workflow_dispatch:
+concurrency:
+  group: relas-ios-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+    env:
+      IOS_DIR: apps/ios
+      BUILD_NUMBER: ${{ github.run_number }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Environment
+        run: |
+          sw_vers; xcodebuild -version; swift --version
+          git rev-parse HEAD
+      - name: Generate project
+        run: |
+          brew install xcodegen
+          cd "$IOS_DIR" && xcodegen generate
+      - name: Simulator build and tests
+        run: scripts/ios/build-simulator.sh
+      - name: Device compilation without signing
+        run: scripts/ios/build-device-nosign.sh
+      - name: Archive if possible without signing
+        run: scripts/ios/archive.sh || true
+      - name: Signing status
+        run: scripts/ios/export-ipa.sh || true
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: relas-ios-${{ github.run_number }}
+          if-no-files-found: warn
+          path: |
+            artifacts/free-ios-build-v1/ci/**
+            apps/ios/build/**

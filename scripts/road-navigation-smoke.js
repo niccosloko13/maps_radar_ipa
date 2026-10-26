@@ -49,6 +49,6 @@ async (page) => {
   const fallback=await page.context().newPage();await fallback.addInitScript(mode=>{if(mode==='missing')Object.defineProperty(navigator,'geolocation',{value:undefined,configurable:true});else Object.defineProperty(navigator,'geolocation',{value:{watchPosition:(ok,fail)=>{setTimeout(()=>fail({code:1}),0);return 1},clearWatch:()=>{},getCurrentPosition:(ok,fail)=>fail({code:1})},configurable:true})},mode);
   await fallback.goto('http://127.0.0.1:8815/?v=232&gps-test='+mode);await fallback.waitForFunction(()=>window.relas?.state.gpsState==='error');const text=await fallback.locator('#gpsIndicator').innerText();check(text.includes(mode==='missing'?'indisponível':'negada'),'Wrong GPS fallback '+text);result.gps[mode]=text;await fallback.close();
  }
- result.sw=await page.evaluate(async()=>({controller:navigator.serviceWorker.controller?.scriptURL,caches:await caches.keys()}));check(result.sw.caches.includes('relas-v232-road-test'),'Wrong app cache');check(result.errors.length===0,'JS errors '+result.errors.join(';'));
+ result.sw=await page.evaluate(async()=>({controller:navigator.serviceWorker.controller?.scriptURL,caches:await caches.keys()}));check(result.sw.caches.includes('relas-v233-road-test'),'Wrong app cache');check(result.errors.length===0,'JS errors '+result.errors.join(';'));
  return result;
 }

@@ -1,0 +1,20 @@
+name: RELAS iOS sideload build
+on: { workflow_dispatch: {} }
+concurrency: { group: relas-ios-sideload, cancel-in-progress: true }
+permissions: { contents: read }
+jobs:
+  sideload:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    env: { BUILD_NUMBER: ${{ github.run_number }} }
+    steps:
+      - uses: actions/checkout@v4
+      - run: xcodebuild -version && swift --version && brew install xcodegen
+      - run: cd apps/ios && xcodegen generate
+      - run: scripts/ios/build-sideload-device.sh
+      - run: scripts/ios/package-sideload-ipa.sh
+      - run: scripts/ios/validate-sideload-ipa.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RELAS-sideload-build-${{ github.run_number }}
+          path: artifacts/sideloadly-ios-v1/

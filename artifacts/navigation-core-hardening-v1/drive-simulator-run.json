@@ -1,0 +1,513 @@
+﻿{
+  "scenarios": 11,
+  "results": [
+    {
+      "scenario": "normal",
+      "speed": 30,
+      "routeCompleted": true,
+      "distance_m": 1169,
+      "virtualDuration_s": 40,
+      "roadModeTransitions": [
+        "CITY_MODE"
+      ],
+      "radarCandidates": 0,
+      "radarsAlerted": 0,
+      "missedAlerts": 0,
+      "wrongDirectionAlerts": 0,
+      "lateAlerts": 0,
+      "reroutes": 0,
+      "gpsLosses": 0,
+      "gpsRecoveries": 0,
+      "sauDetected": 0,
+      "tollsDetected": 0,
+      "metrics": {
+        "gpsAgeMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "processingMs": {
+          "p50": 0.014,
+          "p95": 0.321
+        },
+        "mapMatchMs": {
+          "p50": 0.003,
+          "p95": 0.067
+        },
+        "markerLagMs": {
+          "p50": 0,
+          "p95": 0.001
+        },
+        "cameraLagMs": {
+          "p50": 200,
+          "p95": 200
+        },
+        "endToEndVisualLagMs": {
+          "p50": 200.014,
+          "p95": 200.322
+        }
+      }
+    },
+    {
+      "scenario": "urban",
+      "speed": 50,
+      "routeCompleted": true,
+      "distance_m": 1169,
+      "virtualDuration_s": 40,
+      "roadModeTransitions": [
+        "CITY_MODE"
+      ],
+      "radarCandidates": 0,
+      "radarsAlerted": 0,
+      "missedAlerts": 0,
+      "wrongDirectionAlerts": 0,
+      "lateAlerts": 0,
+      "reroutes": 0,
+      "gpsLosses": 0,
+      "gpsRecoveries": 0,
+      "sauDetected": 0,
+      "tollsDetected": 0,
+      "metrics": {
+        "gpsAgeMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "processingMs": {
+          "p50": 0.009,
+          "p95": 0.025
+        },
+        "mapMatchMs": {
+          "p50": 0.002,
+          "p95": 0.008
+        },
+        "markerLagMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "cameraLagMs": {
+          "p50": 200,
+          "p95": 200
+        },
+        "endToEndVisualLagMs": {
+          "p50": 200.009,
+          "p95": 200.026
+        }
+      }
+    },
+    {
+      "scenario": "highway",
+      "speed": 100,
+      "routeCompleted": true,
+      "distance_m": 1169,
+      "virtualDuration_s": 40,
+      "roadModeTransitions": [
+        "CITY_MODE",
+        "ROAD_MODE"
+      ],
+      "radarCandidates": 0,
+      "radarsAlerted": 0,
+      "missedAlerts": 0,
+      "wrongDirectionAlerts": 0,
+      "lateAlerts": 0,
+      "reroutes": 0,
+      "gpsLosses": 0,
+      "gpsRecoveries": 0,
+      "sauDetected": 0,
+      "tollsDetected": 0,
+      "metrics": {
+        "gpsAgeMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "processingMs": {
+          "p50": 0.009,
+          "p95": 0.018
+        },
+        "mapMatchMs": {
+          "p50": 0.002,
+          "p95": 0.004
+        },
+        "markerLagMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "cameraLagMs": {
+          "p50": 120,
+          "p95": 120
+        },
+        "endToEndVisualLagMs": {
+          "p50": 120.009,
+          "p95": 120.018
+        }
+      }
+    },
+    {
+      "scenario": "gps-noise",
+      "speed": 50,
+      "routeCompleted": true,
+      "distance_m": 1169,
+      "virtualDuration_s": 40,
+      "roadModeTransitions": [
+        "CITY_MODE"
+      ],
+      "radarCandidates": 0,
+      "radarsAlerted": 0,
+      "missedAlerts": 0,
+      "wrongDirectionAlerts": 0,
+      "lateAlerts": 0,
+      "reroutes": 0,
+      "gpsLosses": 0,
+      "gpsRecoveries": 0,
+      "sauDetected": 0,
+      "tollsDetected": 0,
+      "metrics": {
+        "gpsAgeMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "processingMs": {
+          "p50": 0.009,
+          "p95": 0.041
+        },
+        "mapMatchMs": {
+          "p50": 0.002,
+          "p95": 0.01
+        },
+        "markerLagMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "cameraLagMs": {
+          "p50": 200,
+          "p95": 200
+        },
+        "endToEndVisualLagMs": {
+          "p50": 200.009,
+          "p95": 200.041
+        }
+      }
+    },
+    {
+      "scenario": "gps-delay",
+      "speed": 50,
+      "routeCompleted": true,
+      "distance_m": 1169,
+      "virtualDuration_s": 40,
+      "roadModeTransitions": [
+        "CITY_MODE"
+      ],
+      "radarCandidates": 0,
+      "radarsAlerted": 0,
+      "missedAlerts": 0,
+      "wrongDirectionAlerts": 0,
+      "lateAlerts": 0,
+      "reroutes": 0,
+      "gpsLosses": 0,
+      "gpsRecoveries": 0,
+      "sauDetected": 0,
+      "tollsDetected": 0,
+      "metrics": {
+        "gpsAgeMs": {
+          "p50": 900,
+          "p95": 900
+        },
+        "processingMs": {
+          "p50": 0.009,
+          "p95": 0.026
+        },
+        "mapMatchMs": {
+          "p50": 0.002,
+          "p95": 0.004
+        },
+        "markerLagMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "cameraLagMs": {
+          "p50": 200,
+          "p95": 200
+        },
+        "endToEndVisualLagMs": {
+          "p50": 1100.009,
+          "p95": 1100.026
+        }
+      }
+    },
+    {
+      "scenario": "gps-loss",
+      "speed": 30,
+      "routeCompleted": true,
+      "distance_m": 1169,
+      "virtualDuration_s": 40,
+      "roadModeTransitions": [
+        "CITY_MODE"
+      ],
+      "radarCandidates": 0,
+      "radarsAlerted": 0,
+      "missedAlerts": 0,
+      "wrongDirectionAlerts": 0,
+      "lateAlerts": 0,
+      "reroutes": 0,
+      "gpsLosses": 5,
+      "gpsRecoveries": 1,
+      "sauDetected": 0,
+      "tollsDetected": 0,
+      "metrics": {
+        "gpsAgeMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "processingMs": {
+          "p50": 0.009,
+          "p95": 0.026
+        },
+        "mapMatchMs": {
+          "p50": 0.002,
+          "p95": 0.005
+        },
+        "markerLagMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "cameraLagMs": {
+          "p50": 200,
+          "p95": 200
+        },
+        "endToEndVisualLagMs": {
+          "p50": 200.009,
+          "p95": 200.026
+        }
+      }
+    },
+    {
+      "scenario": "off-route",
+      "speed": 50,
+      "routeCompleted": true,
+      "distance_m": 1169,
+      "virtualDuration_s": 40,
+      "roadModeTransitions": [
+        "CITY_MODE"
+      ],
+      "radarCandidates": 0,
+      "radarsAlerted": 0,
+      "missedAlerts": 0,
+      "wrongDirectionAlerts": 0,
+      "lateAlerts": 0,
+      "reroutes": 1,
+      "gpsLosses": 0,
+      "gpsRecoveries": 0,
+      "sauDetected": 0,
+      "tollsDetected": 0,
+      "metrics": {
+        "gpsAgeMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "processingMs": {
+          "p50": 0.009,
+          "p95": 0.032
+        },
+        "mapMatchMs": {
+          "p50": 0.002,
+          "p95": 0.024
+        },
+        "markerLagMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "cameraLagMs": {
+          "p50": 200,
+          "p95": 200
+        },
+        "endToEndVisualLagMs": {
+          "p50": 200.009,
+          "p95": 200.032
+        }
+      }
+    },
+    {
+      "scenario": "parallel-road",
+      "speed": 50,
+      "routeCompleted": true,
+      "distance_m": 1169,
+      "virtualDuration_s": 40,
+      "roadModeTransitions": [
+        "CITY_MODE"
+      ],
+      "radarCandidates": 0,
+      "radarsAlerted": 0,
+      "missedAlerts": 0,
+      "wrongDirectionAlerts": 0,
+      "lateAlerts": 0,
+      "reroutes": 0,
+      "gpsLosses": 0,
+      "gpsRecoveries": 0,
+      "sauDetected": 0,
+      "tollsDetected": 0,
+      "metrics": {
+        "gpsAgeMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "processingMs": {
+          "p50": 0.009,
+          "p95": 0.021
+        },
+        "mapMatchMs": {
+          "p50": 0.003,
+          "p95": 0.009
+        },
+        "markerLagMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "cameraLagMs": {
+          "p50": 200,
+          "p95": 200
+        },
+        "endToEndVisualLagMs": {
+          "p50": 200.01,
+          "p95": 200.022
+        }
+      }
+    },
+    {
+      "scenario": "wrong-direction",
+      "speed": 50,
+      "routeCompleted": true,
+      "distance_m": 1169,
+      "virtualDuration_s": 40,
+      "roadModeTransitions": [
+        "CITY_MODE"
+      ],
+      "radarCandidates": 0,
+      "radarsAlerted": 0,
+      "missedAlerts": 0,
+      "wrongDirectionAlerts": 0,
+      "lateAlerts": 0,
+      "reroutes": 0,
+      "gpsLosses": 0,
+      "gpsRecoveries": 0,
+      "sauDetected": 0,
+      "tollsDetected": 0,
+      "metrics": {
+        "gpsAgeMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "processingMs": {
+          "p50": 0.021,
+          "p95": 0.068
+        },
+        "mapMatchMs": {
+          "p50": 0.014,
+          "p95": 0.023
+        },
+        "markerLagMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "cameraLagMs": {
+          "p50": 200,
+          "p95": 200
+        },
+        "endToEndVisualLagMs": {
+          "p50": 200.022,
+          "p95": 200.068
+        }
+      }
+    },
+    {
+      "scenario": "stop-and-go",
+      "speed": 20,
+      "routeCompleted": true,
+      "distance_m": 1169,
+      "virtualDuration_s": 40,
+      "roadModeTransitions": [
+        "CITY_MODE"
+      ],
+      "radarCandidates": 0,
+      "radarsAlerted": 0,
+      "missedAlerts": 0,
+      "wrongDirectionAlerts": 0,
+      "lateAlerts": 0,
+      "reroutes": 0,
+      "gpsLosses": 0,
+      "gpsRecoveries": 0,
+      "sauDetected": 0,
+      "tollsDetected": 0,
+      "metrics": {
+        "gpsAgeMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "processingMs": {
+          "p50": 0.011,
+          "p95": 0.054
+        },
+        "mapMatchMs": {
+          "p50": 0.003,
+          "p95": 0.011
+        },
+        "markerLagMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "cameraLagMs": {
+          "p50": 300,
+          "p95": 300
+        },
+        "endToEndVisualLagMs": {
+          "p50": 300.012,
+          "p95": 300.054
+        }
+      }
+    },
+    {
+      "scenario": "high-speed",
+      "speed": 120,
+      "routeCompleted": true,
+      "distance_m": 1169,
+      "virtualDuration_s": 40,
+      "roadModeTransitions": [
+        "CITY_MODE",
+        "ROAD_MODE"
+      ],
+      "radarCandidates": 0,
+      "radarsAlerted": 0,
+      "missedAlerts": 0,
+      "wrongDirectionAlerts": 0,
+      "lateAlerts": 0,
+      "reroutes": 0,
+      "gpsLosses": 0,
+      "gpsRecoveries": 0,
+      "sauDetected": 0,
+      "tollsDetected": 0,
+      "metrics": {
+        "gpsAgeMs": {
+          "p50": 0,
+          "p95": 0
+        },
+        "processingMs": {
+          "p50": 0.014,
+          "p95": 0.039
+        },
+        "mapMatchMs": {
+          "p50": 0.004,
+          "p95": 0.011
+        },
+        "markerLagMs": {
+          "p50": 0,
+          "p95": 0.001
+        },
+        "cameraLagMs": {
+          "p50": 75,
+          "p95": 75
+        },
+        "endToEndVisualLagMs": {
+          "p50": 75.015,
+          "p95": 75.039
+        }
+      }
+    }
+  ]
+}

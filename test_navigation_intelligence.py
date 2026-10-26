@@ -4,6 +4,18 @@ from navigation_backend import address_query,search_address,instruction_pt,route
 
 
 class NavigationBackendTests(unittest.TestCase):
+ def test_rui_barbosa_exact_street_wins_and_missing_number_stays_on_street(self):
+  features=[
+   {'geometry':{'coordinates':[-46.41,-24.01]},'properties':{'street':'Rua Rui Barbosa','housenumber':'521','city':'Praia Grande','state':'Sao Paulo'}},
+   {'geometry':{'coordinates':[-46.42,-24.01]},'properties':{'street':'Rua Barbosa','housenumber':'521','city':'Praia Grande','state':'Sao Paulo'}},
+   {'geometry':{'coordinates':[-46.43,-24.01]},'properties':{'street':'Rua Rui Barbosa','city':'Praia Grande','state':'Sao Paulo'}},
+  ]
+  def http(*args,**kwargs):return json.dumps({'features':features}).encode(),200,{},None
+  for number in ('198','521','818'):
+   row=search_address('Rua Rui Barbosa, '+number+', Praia Grande',http,'test',submitted=True)[0]
+   self.assertEqual(row['address']['street'],'Rua Rui Barbosa');self.assertEqual(row['address']['city'],'Praia Grande')
+  row=search_address('Rua Rui Barbosa, 999999, Praia Grande',http,'test',submitted=True)[0]
+  self.assertEqual(row['address_state'],'APPROXIMATE_NUMBER');self.assertEqual(row['precision_label'],'Número aproximado')
  def test_address_number_city_and_cep(self):
   for q in ['Av. Paulista, 1578, São Paulo','Avenida Paulista 1578, São Paulo','Avenida Paulista 1578 São Paulo']:
    p=address_query(q);self.assertEqual(p['housenumber'],'1578');self.assertEqual(p['city'],'São Paulo')

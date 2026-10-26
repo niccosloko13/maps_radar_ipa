@@ -1,0 +1,45 @@
+{
+  "errors": [],
+  "fixtures": true,
+  "controls": {
+    "glyphs": false,
+    "allSvg": true,
+    "theme": true
+  },
+  "collision": {
+    "input": 4,
+    "before": 1,
+    "after": 4
+  },
+  "works": {
+    "rendered": true,
+    "icon": true,
+    "filter": true,
+    "off": true
+  },
+  "rain": {
+    "absent": true,
+    "invalid": true,
+    "valid": true,
+    "status": {
+      "available": true,
+      "source": "Fixture local · teste, sem previsão real",
+      "updatedAt": "2026-10-26T14:49:23.236Z",
+      "expiresAt": "2026-10-26T14:50:23.236Z",
+      "regions": 1
+    },
+    "rendered": true
+  },
+  "hideAll": true,
+  "clusters": 55,
+  "clusterClick": {
+    "from": 11.5,
+    "to": 12
+  },
+  "frames": {
+    "visible": true,
+    "frames": 92,
+    "averageFps": 45,
+    "p95FrameMs": 33.400000000001455
+  }
+}

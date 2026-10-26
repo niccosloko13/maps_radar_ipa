@@ -1,0 +1,116 @@
+{
+  "errors": [],
+  "viewports": [
+    {
+      "width": 375,
+      "height": 812,
+      "overflow": false,
+      "radarFirst": true,
+      "hudFits": true,
+      "small": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "radarFirst": true,
+      "hudFits": true,
+      "small": []
+    },
+    {
+      "width": 430,
+      "height": 932,
+      "overflow": false,
+      "radarFirst": true,
+      "hudFits": true,
+      "small": []
+    },
+    {
+      "width": 412,
+      "height": 915,
+      "overflow": false,
+      "radarFirst": true,
+      "hudFits": true,
+      "small": []
+    }
+  ],
+  "address": "Museu de Arte de São Paulo, Av. Paulista, 1578, Bela Vista, São Paulo, 01310-200",
+  "auto": {
+    "before": "CITY_MODE",
+    "after": "ROAD_MODE",
+    "score": 0.8500000000000001,
+    "selected": "fixture-radar",
+    "radarFirst": true,
+    "progress": 400.00000000034885,
+    "gradient": [
+      "step",
+      [
+        "line-progress"
+      ],
+      "rgba(80,105,115,0.035)",
+      0.13333333333346217,
+      "#167b8e"
+    ],
+    "lineMetrics": true,
+    "signals": "none",
+    "routeMarkers": [
+      "fixture-radar"
+    ]
+  },
+  "voiceReplay": {
+    "spoken": [
+      "Radar a 500 metros. Limite 60."
+    ],
+    "navigation": false,
+    "radar": true,
+    "deterministic": true,
+    "matchesLive": true,
+    "records": 3,
+    "events": [
+      {
+        "radarVoiceTimestamp": 1793026178669,
+        "channel": "radar",
+        "alertId": "fixture-radar",
+        "text": "Radar a 500 metros. Limite 60."
+      }
+    ],
+    "selected": "fixture-radar"
+  },
+  "metrics": {
+    "gpsFixAgeMs": 1,
+    "receivedAt": 4251.299999952316,
+    "locationEngineMs": 0,
+    "routeMatchMs": 0.10000002384185791,
+    "projectionMs": 0.10000002384185791,
+    "markerRenderLagMs": 6.5,
+    "cameraLagMs": 148.89999997615814
+  },
+  "recordExport": {
+    "navigationRecords": 1,
+    "gpsRecords": 1,
+    "stopped": true
+  },
+  "gpsSuspend": {
+    "hidden": true,
+    "cleared": true,
+    "sourceEmpty": true
+  },
+  "roadReportOptions": 9,
+  "report": {
+    "intercepted": true,
+    "kind": "animal"
+  },
+  "reroute": {
+    "progress": 0,
+    "gradient": [
+      "step",
+      [
+        "line-progress"
+      ],
+      "rgba(80,105,115,0.035)",
+      0,
+      "#167b8e"
+    ],
+    "alerts": 0
+  }
+}
