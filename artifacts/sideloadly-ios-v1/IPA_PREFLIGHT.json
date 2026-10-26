@@ -1,7 +1,7 @@
 {
   "status": "PASS",
-  "workflow_run": 40415947995,
-  "artifact": "RELAS-sideload-build-5",
+  "workflow_run": 40416227900,
+  "artifact": "RELAS-sideload-build-6",
   "ipa": "RELAS-unsigned.ipa",
   "payload": "Payload/RELAS.app",
   "info_plist": "Payload/RELAS.app/Info.plist",
