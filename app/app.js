@@ -13,6 +13,28 @@ $('#closeSheet').onclick=()=>$('#sheet').close();$('#sheet').onclick=e=>{if(e.ta
 S.communityVisible=localStorage.getItem('relas-community-visible')!=='0';
 const map=new maplibregl.Map({container:'map',style:'https://tiles.openfreemap.org/styles/liberty',center:(()=>{const q=new URLSearchParams(location.search),x=Number(q.get('road_lon')),y=Number(q.get('road_lat'));return q.has('road_lon')&&Number.isFinite(x)&&Number.isFinite(y)&&x>=-54&&x<=-43&&y>=-26&&y<=-19?[x,y]:[-46.55,-23.69]})(),zoom:new URLSearchParams(location.search).has('road_lon')?14:11.5,attributionControl:{compact:true}});window.relas={map,state:S};
 const weather=window.RelasWeather.create(map);window.relas.weather=weather;
+const forecastCard=$('#relasWeatherCard');
+let lastForecastCenter=null,forecastInProgress=false;
+async function refreshForecast(){
+ if(!window.RelasForecast||!forecastCard||forecastInProgress||S.driving)return;
+ const c=map.getCenter(),lat=S.position?.[1]??c.lat,lon=S.position?.[0]??c.lng;
+ if(lastForecastCenter&&Math.abs(lastForecastCenter.lat-lat)<.05&&Math.abs(lastForecastCenter.lon-lon)<.05&&Date.now()-lastForecastCenter.at<600000)return;
+ forecastInProgress=true;
+ try{
+  const d=await window.RelasForecast.forecast(lat,lon);lastForecastCenter={lat,lon,at:Date.now(),data:d};
+  $('#relasWeatherTemp').textContent=Number.isFinite(d.temperature)?Math.round(d.temperature)+'°C · '+(d.code>=95?'Trovoadas':d.precipitation>0?'Chuva':'Previsão local'):'Previsão local';
+  const next=d.hours[0],chance=Number(next?.probability);
+  $('#relasWeatherRain').textContent=Number.isFinite(chance)?'Chance de chuva '+Math.round(chance)+'% · Open-Meteo':'Fonte: Open-Meteo';
+ }catch(err){$('#relasWeatherTemp').textContent='Previsão indisponível';$('#relasWeatherRain').textContent='Sem dados recentes de clima';console.warn('RELAS forecast',err.message)}
+ finally{forecastInProgress=false}
+}
+$('#relasWeatherOpen').onclick=()=>{
+ const d=lastForecastCenter?.data;if(!d){refreshForecast();return}
+ sheet('PREVISÃO DO TEMPO','<h2>Próximas 6 horas</h2><p class="subtitle">Previsão por modelo meteorológico · Open-Meteo. Não substitui alertas oficiais de emergência.</p>'+d.hours.map(h=>'<div class="relas-forecast-row"><strong>'+safe(h.time.slice(11,16))+'</strong><span>'+safe(Number.isFinite(Number(h.probability))?Math.round(Number(h.probability))+'% de chance de chuva':'Sem estimativa')+'</span><span>'+safe(Number.isFinite(Number(h.temperature))?Math.round(Number(h.temperature))+'°C':'—')+'</span></div>').join('')+'<p class="subtitle">Atualização da fonte: '+safe(d.updatedAt)+'</p>')
+};
+map.on('moveend',()=>{if(!S.driving)refreshForecast()});setInterval(()=>{if(!document.hidden)refreshForecast()},600000);
+refreshForecast();
+
 const rainStatus=document.createElement('button');rainStatus.className='rain-status';rainStatus.hidden=true;rainStatus.setAttribute('aria-label','Ver alertas de chuva');document.body.append(rainStatus);
 function updateWeatherStatus(){const w=weather.status();rainStatus.hidden=!S.rainVisible||!w.available||!w.regions;rainStatus.innerHTML=UI.icon('layers')+'<span>'+safe(w.regions||0)+' regiões com alerta de chuva</span>';}
 const clearWeather=weather.clear;weather.clear=(...args)=>{clearWeather(...args);updateWeatherStatus()};
