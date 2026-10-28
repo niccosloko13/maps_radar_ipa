@@ -75,3 +75,20 @@
  .driving .eta span{overflow-wrap:anywhere}
  .driving .alert{max-height:120px;overflow:hidden}
 }
+
+/* Motion: clear maneuver typography, radar contrast and smaller footprint. */
+.driving .maneuver{isolation:isolate}
+.driving .maneuver h2{max-width:100%;overflow-wrap:break-word}
+.driving .alert[data-intensity=strong],.driving .alert[data-overspeed=true]{outline:2px solid #c6534930}
+.driving .alert[data-intensity=discreet]{box-shadow:0 5px 16px #152d361c}
+.driving .velocity b,.driving .eta strong{font-feature-settings:"tnum";font-variant-numeric:tabular-nums}
+.driving .drive-bottom button:focus-visible,.driving .maneuver button:focus-visible{outline:3px solid #7863e5;outline-offset:2px}
+@media(max-width:600px){
+ .driving .maneuver{width:calc(100% - 24px);min-height:92px;max-height:126px}
+ .driving .maneuver small{font-size:clamp(23px,7vw,29px)}
+ .driving .maneuver h2{font-size:clamp(13px,3.7vw,16px)}
+ .driving .drive-bottom{width:calc(100% - 24px);max-width:none}
+ .driving .drive-bottom .eta{overflow:hidden}
+ .driving .drive-bottom .eta span{white-space:normal;overflow-wrap:anywhere}
+ .driving .alert{max-width:none;width:calc(100% - 24px)}
+}
