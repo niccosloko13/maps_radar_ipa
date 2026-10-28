@@ -78,7 +78,7 @@ async function reroute(p){if(S.rerouting||Date.now()-(S.rerouteAt||0)<20000)retu
 function startDrive(sim=false){if(!S.route)return toast('Planeje um trajeto primeiro');$('#sheet').close();roadRuntime.progress.reset();roadRuntime.manager.reset();roadRuntime.voiceQueue.clear();roadRuntime.routeReset=true;S.driving=true;S.follow=true;S.cameraPosition=null;S.cameraBearing=null;$('#recenter').hidden=true;document.body.classList.add('driving');$('#drive').hidden=false;applyTheme();setRelevance();if(sim){simulate();return}clearInterval(S.simulation);S.simulation=null;updateDrive(S.position||S.route.geometry.coordinates[0],S.speed,S.heading);startTracking()}
 function simulate(){stopTracking();clearInterval(S.simulation);let i=0;S.simulation=setInterval(()=>{const c=S.route.geometry.coordinates;if(i>=c.length){clearInterval(S.simulation);S.simulation=null;gpsMessage('Prévia concluída · GPS pausado');return}updateDrive(c[i],13.9,bearing(c[i],c[Math.min(i+1,c.length-1)]));i++},650)}
 $('#simulate').onclick=simulate;$('#voice').onclick=()=>roadRuntime.toggleNavigationVoice();
-$('#exitDrive').onclick=()=>{if(S.pendingUpdate){window.speechSynthesis?.cancel();stopTracking();location.reload();return}S.driving=false;roadRuntime.exit();document.body.classList.remove('driving');$('#drive').hidden=true;clearInterval(S.simulation);S.simulation=null;window.speechSynthesis?.cancel();map.easeTo({pitch:0,bearing:0,zoom:14,padding:{top:0,bottom:0,left:0,right:0}});applyTheme();startTracking()};
+$('#exitDrive').onclick=()=>{if(S.pendingUpdate){window.speechSynthesis?.cancel();stopTracking();location.reload();return}S.driving=false;roadRuntime.exit();document.body.classList.remove('driving');$('#drive').hidden=true;setRelevance();clearInterval(S.simulation);S.simulation=null;window.speechSynthesis?.cancel();map.easeTo({pitch:0,bearing:0,zoom:14,padding:{top:0,bottom:0,left:0,right:0}});applyTheme();startTracking()};
 window.relas.updateDrive=updateDrive;window.relas.startDrive=startDrive;window.relas.details=details;
 
 setInterval(()=>{if(!document.hidden)loadViewport()},30000);
@@ -93,7 +93,7 @@ function setRelevance(){const driving=Boolean(S.driving),route=Boolean(S.route);
   if(!map.getLayer(id))continue;
   const base=['interpolate',['linear'],['zoom'],11,.6,15,1];
   const focused=id==='relas-icons'?['case',['in',['get','kind'],['literal',roadIcons]],.67,.18]:.38;
-  map.setPaintProperty(id,'icon-opacity',driving?focused:route?.55:base);
+  map.setPaintProperty(id,'icon-opacity',driving?focused:(route?0.55:base));
  }
  for(const id of ['relas-clusters','relas-count'])if(map.getLayer(id))map.setLayoutProperty(id,'visibility',driving?'none':'visible');
 }
