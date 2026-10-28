@@ -1,0 +1,94 @@
+/* RELAS Navigation V4 — drive-first layout, independent of data/alert engine. */
+.driving .maneuver{
+  left:max(12px,env(safe-area-inset-left));transform:none;top:max(12px,env(safe-area-inset-top));
+  width:min(430px,calc(100vw - 24px));max-width:none;min-height:108px;
+  display:flex;gap:14px;padding:16px 18px;border:1px solid #263643;
+  border-radius:24px;background:#142331f5;color:#fff;
+  box-shadow:0 16px 35px #101a2b35;backdrop-filter:blur(14px)
+}
+.driving .maneuver>b{flex:0 0 58px;display:flex;justify-content:center;align-items:center;color:#fff}
+.driving .maneuver>b .ui-icon{width:52px;height:52px;stroke-width:2.3}
+.driving .maneuver>div{flex:1;min-width:0}
+.driving .maneuver small{display:block;color:#fff;font-size:30px;line-height:1.1;font-weight:800;letter-spacing:-.6px}
+.driving .maneuver h2{color:#eaf4f6;font-size:17px;line-height:1.25;font-weight:650;margin:8px 0 0;overflow-wrap:anywhere}
+.driving .maneuver #exitDrive{flex:0 0 44px;align-self:flex-start;min-height:44px;background:#ffffff12;color:#fff;border:1px solid #ffffff2a;box-shadow:none}
+.driving .alert{top:calc(135px + env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));transform:none;
+  max-width:430px;width:calc(100vw - 24px);border-radius:22px;border:2px solid #f4ad47;
+  background:#fffaf0f7;box-shadow:0 14px 30px #37271028;color:#243342;
+  padding:12px 16px;min-height:90px}
+.driving .alert small{color:#77531b;font-size:11px;font-weight:800;letter-spacing:.7px}
+.driving .alert b{color:#1b3441;font-weight:850;font-size:23px;line-height:1.15}
+.driving .alert strong{font-size:27px;font-weight:850;color:#1b3441}
+.driving.radar-first .alert,.driving.alert-first .alert{top:calc(12px + env(safe-area-inset-top));z-index:8;border-color:#dc7835}
+.driving.radar-first .maneuver,.driving.alert-first .maneuver{top:calc(126px + env(safe-area-inset-top));z-index:7}
+.driving .drive-bottom{max-width:720px;width:min(720px,calc(100vw - 24px));
+  bottom:calc(12px + env(safe-area-inset-bottom));border:1px solid #d4e2e9;
+  border-radius:26px;background:#fffffff5;box-shadow:0 15px 40px #1c334a30;
+  color:#182e3b;padding:12px 16px;gap:12px}
+.driving .velocity{border-right:1px solid #d4e2e9;padding-right:16px}
+.driving .velocity b{font-size:38px;letter-spacing:-1px;font-weight:850;color:#172e3b}
+.driving .velocity small{color:#526b76;font-size:11px}
+.driving .eta{min-width:0}
+.driving .eta strong{font-size:25px;font-weight:800;color:#172e3b}
+.driving .eta span{font-size:13px;color:#4d6470}
+.driving .eta small{font-size:10px;color:#617783}
+.driving .drive-bottom button{background:#f3f7f9;color:#233a48;border:1px solid #dce8ed;box-shadow:none}
+.driving #gpsStatus{max-width:450px;border-radius:20px;background:#fffffff0;color:#3b5665;font-weight:650}
+.driving .report{opacity:.83}
+.road-mode.driving .maneuver{max-width:480px}
+@media(max-width:600px){
+ .driving .maneuver{padding:12px 13px;min-height:98px;gap:9px}
+ .driving .maneuver>b{flex-basis:46px}
+ .driving .maneuver>b .ui-icon{width:42px;height:42px}
+ .driving .maneuver small{font-size:27px}
+ .driving .maneuver h2{font-size:15px}
+ .driving .maneuver #exitDrive{width:40px;flex-basis:40px}
+ .driving .alert{top:calc(116px + env(safe-area-inset-top));}
+ .driving.radar-first .maneuver,.driving.alert-first .maneuver{top:calc(115px + env(safe-area-inset-top))}
+ .driving .drive-bottom{padding:10px 11px;gap:7px;min-height:82px}
+ .driving .velocity{flex:0 0 54px;padding-right:10px}
+ .driving .velocity b{font-size:32px}
+ .driving .eta strong{font-size:22px}
+ .driving .drive-bottom button{flex:0 0 44px}
+}
+@media(prefers-reduced-motion:reduce){.driving .maneuver,.driving .alert,.driving .drive-bottom{transition:none!important}}
+
+/* V4.1: prioritize readable guidance and tap targets on small screens. */
+@media(max-width:600px){.driving .maneuver h2{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}.driving .drive-bottom .eta strong{font-variant-numeric:tabular-nums}.driving .drive-bottom button{min-height:48px;min-width:44px}.driving .alert[data-overspeed=true]{border-left:5px solid #bf443a;background:#fff1ef}}
+
+/* RELAS Motion V4.2: calm, readable overlays and predictable radar priority. */
+.driving .maneuver{border-radius:20px;box-shadow:0 10px 32px #0e293c38}
+.driving .maneuver small{font-variant-numeric:tabular-nums}
+.driving .maneuver h2{letter-spacing:-.2px;text-wrap:balance}
+.driving .alert{border-radius:18px;box-shadow:0 8px 25px #102d3c23}
+.driving .alert[data-intensity=discreet]{opacity:.92;border-color:#e2d8c5}
+.driving .alert[data-intensity=attention],.driving .alert[data-intensity=highlight]{border-left:5px solid #d18a23}
+.driving .alert[data-intensity=strong],.driving .alert[data-overspeed=true]{border-left:6px solid #c84b41}
+.driving .drive-bottom{border-radius:22px;box-shadow:0 10px 33px #0b263029}
+.driving .eta strong,.driving .velocity b{font-variant-numeric:tabular-nums}
+.driving .drive-bottom button{touch-action:manipulation}
+@media(max-width:600px){
+ .driving .maneuver{max-height:118px;overflow:hidden}
+ .driving .maneuver h2{max-height:44px;overflow:hidden}
+ .driving .drive-bottom{gap:7px}
+ .driving .eta{overflow:hidden}
+ .driving .eta span{overflow-wrap:anywhere}
+ .driving .alert{max-height:120px;overflow:hidden}
+}
+
+/* Motion: clear maneuver typography, radar contrast and smaller footprint. */
+.driving .maneuver{isolation:isolate}
+.driving .maneuver h2{max-width:100%;overflow-wrap:break-word}
+.driving .alert[data-intensity=strong],.driving .alert[data-overspeed=true]{outline:2px solid #c6534930}
+.driving .alert[data-intensity=discreet]{box-shadow:0 5px 16px #152d361c}
+.driving .velocity b,.driving .eta strong{font-feature-settings:"tnum";font-variant-numeric:tabular-nums}
+.driving .drive-bottom button:focus-visible,.driving .maneuver button:focus-visible{outline:3px solid #7863e5;outline-offset:2px}
+@media(max-width:600px){
+ .driving .maneuver{width:calc(100% - 24px);min-height:92px;max-height:126px}
+ .driving .maneuver small{font-size:clamp(23px,7vw,29px)}
+ .driving .maneuver h2{font-size:clamp(13px,3.7vw,16px)}
+ .driving .drive-bottom{width:calc(100% - 24px);max-width:none}
+ .driving .drive-bottom .eta{overflow:hidden}
+ .driving .drive-bottom .eta span{white-space:normal;overflow-wrap:anywhere}
+ .driving .alert{max-width:none;width:calc(100% - 24px)}
+}

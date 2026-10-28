@@ -14,3 +14,11 @@ dialog{background:var(--panel);border:1px solid var(--line);color:var(--text);bo
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
 
 .rain-status{position:fixed;right:24px;top:100px;z-index:3;font-size:12px;color:#386c8e;border-color:#a7c5d8}.driving>.rain-status{top:auto;bottom:calc(256px + env(safe-area-inset-bottom))}@media(max-width:600px){.rain-status{left:14px;right:auto;top:calc(207px + env(safe-area-inset-top));font-size:11px;min-height:44px}.driving>.rain-status{top:auto;bottom:calc(256px + env(safe-area-inset-bottom))}}
+
+/* RELAS Motion — quieter search and controls over the map. */
+.search{border-radius:20px;box-shadow:0 10px 30px #17324420;backdrop-filter:blur(16px)}
+.search-wrap .coverage{box-shadow:0 5px 18px #1d394712}
+.map-tools button{border-radius:16px;box-shadow:0 7px 22px #1d39471d}
+.journey>button{border-radius:18px;font-weight:750;box-shadow:0 7px 22px #1d39471c}
+.report{font-weight:750;letter-spacing:.05px}
+@media(max-width:600px){.search{border-radius:18px}.top .brand{border-radius:14px}.map-tools{gap:10px}.journey>button{border-radius:17px}}

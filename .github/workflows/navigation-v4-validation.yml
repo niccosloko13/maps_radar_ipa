@@ -1,0 +1,23 @@
+name: RELAS Navigation V4 checks
+on:
+  push:
+    branches:
+      - feat/relas-navigation-redesign-v4
+  workflow_dispatch:
+jobs:
+  navigation-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate JavaScript syntax
+        run: |
+          node --check app/navigation-core.js
+          node --check app/navigation/road-runtime.js
+          node --check app/app.js
+      - name: Run arrival and drive simulator tests
+        run: |
+          node --test tests/navigation-arrival.test.js tests/drive-simulator.test.cjs
