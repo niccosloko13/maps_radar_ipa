@@ -14,6 +14,17 @@ if(radarAuditButton)radarAuditButton.onclick=()=>{
  const line=(label,n)=>'<div class="relas-forecast-row"><span>'+safe(label)+'</span><strong>'+safe(n)+'</strong></div>';
  sheet('QUALIDADE DOS RADARES','<h2>Auditoria da região visível</h2><p class="subtitle">Contagem apenas dos radares retornados pelo mapa neste zoom. Não é o inventário estadual nem comprova atividade operacional.</p>'+line('Radares retornados',audit.total)+line('Fonte oficial declarada',audit.official)+line('Confirmados',audit.confirmed)+line('Velocidade cadastrada',audit.withSpeed)+line('Sentido cadastrado',audit.withDirection)+line('Data de referência disponível',audit.withDate)+line('Sem data verificável',audit.unknownDate)+line('Data superior a 180 dias',audit.stale)+line('Possíveis duplicações',audit.possibleDuplicates)+line('Coordenadas inválidas',audit.invalidCoordinates)+'<p class="subtitle">Datas de importação não comprovam que um radar esteja ativo. Duplicações são apenas indícios geográficos e precisam de revisão manual.</p>');
 };
+const driverPanelButton=$('#driverPanelBtn');
+if(driverPanelButton)driverPanelButton.onclick=()=>{
+ const points=S.catalog||[],audit=window.RelasRadarAudit?.analyze(points);
+ const wx=lastForecastCenter?.data;
+ const total=points.length.toLocaleString('pt-BR'),radars=(audit?.total??0).toLocaleString('pt-BR');
+ const temp=wx&&Number.isFinite(wx.temperature)?Math.round(wx.temperature)+'°C':'Indisponível';
+ sheet('CENTRAL DO MOTORISTA','<div class="relas-driver-panel"><div class="relas-panel-intro"><span>RELAS MOTION</span><h2>Sua estrada, com clareza.</h2><p>Informações da região que você está visualizando. Os números não representam cobertura estadual nem certificam equipamentos em operação.</p></div><div class="relas-panel-grid"><div><small>Radares na região</small><strong>'+safe(radars)+'</strong></div><div><small>Objetos carregados</small><strong>'+safe(total)+'</strong></div><div><small>Clima local</small><strong>'+safe(temp)+'</strong></div><div><small>Rota</small><strong>'+(S.route?'Calculada':'Não iniciada')+'</strong></div></div><button class="relas-panel-primary" id="driverPanelStart">Planejar trajeto</button><div class="relas-panel-actions"><button id="driverPanelRadars">Qualidade dos radares</button><button id="driverPanelWeather">Previsão do tempo</button></div><p class="subtitle">Radares sem data ou direção comprovada exigem verificação. O mapa não substitui a sinalização oficial.</p></div>');
+ $('#driverPanelStart')?.addEventListener('click',()=>{$('#sheet').close();$('#plan')?.click()});
+ $('#driverPanelRadars')?.addEventListener('click',()=>radarAuditButton?.click());
+ $('#driverPanelWeather')?.addEventListener('click',()=>$('#relasWeatherOpen')?.click());
+};
 function toast(t){$('#toast').textContent=t;$('#toast').classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').classList.remove('show'),4000)}
 function sheet(title,html){$('#sheetLabel').textContent=title;$('#sheetContent').innerHTML=html;if(!$('#sheet').open)$('#sheet').showModal()}
 $('#closeSheet').onclick=()=>$('#sheet').close();$('#sheet').onclick=e=>{if(e.target===$('#sheet'))$('#sheet').close()};
