@@ -55,3 +55,23 @@
 
 /* V4.1: prioritize readable guidance and tap targets on small screens. */
 @media(max-width:600px){.driving .maneuver h2{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}.driving .drive-bottom .eta strong{font-variant-numeric:tabular-nums}.driving .drive-bottom button{min-height:48px;min-width:44px}.driving .alert[data-overspeed=true]{border-left:5px solid #bf443a;background:#fff1ef}}
+
+/* RELAS Motion V4.2: calm, readable overlays and predictable radar priority. */
+.driving .maneuver{border-radius:20px;box-shadow:0 10px 32px #0e293c38}
+.driving .maneuver small{font-variant-numeric:tabular-nums}
+.driving .maneuver h2{letter-spacing:-.2px;text-wrap:balance}
+.driving .alert{border-radius:18px;box-shadow:0 8px 25px #102d3c23}
+.driving .alert[data-intensity=discreet]{opacity:.92;border-color:#e2d8c5}
+.driving .alert[data-intensity=attention],.driving .alert[data-intensity=highlight]{border-left:5px solid #d18a23}
+.driving .alert[data-intensity=strong],.driving .alert[data-overspeed=true]{border-left:6px solid #c84b41}
+.driving .drive-bottom{border-radius:22px;box-shadow:0 10px 33px #0b263029}
+.driving .eta strong,.driving .velocity b{font-variant-numeric:tabular-nums}
+.driving .drive-bottom button{touch-action:manipulation}
+@media(max-width:600px){
+ .driving .maneuver{max-height:118px;overflow:hidden}
+ .driving .maneuver h2{max-height:44px;overflow:hidden}
+ .driving .drive-bottom{gap:7px}
+ .driving .eta{overflow:hidden}
+ .driving .eta span{overflow-wrap:anywhere}
+ .driving .alert{max-height:120px;overflow:hidden}
+}
