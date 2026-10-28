@@ -17,5 +17,19 @@
   function geoBearing(a,b){const p=a[1]*Math.PI/180,q=b[1]*Math.PI/180,d=(b[0]-a[0])*Math.PI/180;return(Math.atan2(Math.sin(d)*Math.cos(q),Math.cos(p)*Math.sin(q)-Math.sin(p)*Math.cos(q)*Math.cos(d))*180/Math.PI+360)%360}
   function projectSegment(p,s){const k=Math.cos(p[1]*Math.PI/180),dx=(s.b[0]-s.a[0])*k,dy=s.b[1]-s.a[1],t=Math.max(0,Math.min(1,((p[0]-s.a[0])*k*dx+(p[1]-s.a[1])*dy)/(dx*dx+dy*dy||1))),point=[s.a[0]+(s.b[0]-s.a[0])*t,s.a[1]+(s.b[1]-s.a[1])*t];return{longitude:point[0],latitude:point[1],along:s.start+t*s.len,segmentIndex:s.index,roadBearing:s.bearing??geoBearing(s.a,s.b),distanceToRoute:geoDistance(p,point)}}
   function projectSegments(p,segments){let best=null;for(let i=0;i<segments.length;i++){const c=projectSegment(p,segments[i]);if(!best||c.distanceToRoute<best.distanceToRoute)best={...c,segmentIndex:i}}return best}
-  return{geoDistance,geoBearing,projectSegment,projectSegments,angularDelta,smoothHeading,validFix,directionMatches,smoothPosition,cameraZoom};
+
+  // Arrival is deliberately conservative: route progress alone cannot prove arrival at a house number.
+  class ArrivalTracker {
+    constructor(){this.reset()}
+    reset(){this.state='EN_ROUTE';this.confirmations=0;this.lastAt=0}
+    update({remainingMetres,endpointDistanceMetres,routeDistanceMetres,accuracyMetres,speedMetresPerSecond,positionPredicted=false,locationLost=false,precision='unknown',now=Date.now()}){
+      const precise=['rooftop','entrance','exact'].includes(precision);
+      const eligible=Number.isFinite(remainingMetres)&&remainingMetres<=35&&Number.isFinite(endpointDistanceMetres)&&endpointDistanceMetres<=30&&Number.isFinite(routeDistanceMetres)&&routeDistanceMetres<=25&&Number.isFinite(accuracyMetres)&&accuracyMetres<=25&&Number.isFinite(speedMetresPerSecond)&&speedMetresPerSecond<=3&& !positionPredicted&&!locationLost;
+      if(!eligible){this.confirmations=0;if(this.state!=='EN_ROUTE')this.state=Number.isFinite(remainingMetres)&&remainingMetres<=180?'APPROACHING':'EN_ROUTE';return{state:this.state,confirmed:false,precise,reason:!precise?'ADDRESS_NOT_PRECISE':'POSITION_NOT_CONFIRMED'}}
+      if(!this.lastAt||now-this.lastAt>=500){this.confirmations++;this.lastAt=now}
+      this.state=this.confirmations>=2?(precise?'ARRIVED_CONFIRMED':'ARRIVAL_APPROXIMATE'):'ARRIVAL_CANDIDATE';
+      return{state:this.state,confirmed:this.state==='ARRIVED_CONFIRMED',precise,reason:precise?'LOCATION_CONFIRMED':'ADDRESS_NOT_PRECISE'}
+    }
+  }
+  return{ArrivalTracker,geoDistance,geoBearing,projectSegment,projectSegments,angularDelta,smoothHeading,validFix,directionMatches,smoothPosition,cameraZoom};
 });
