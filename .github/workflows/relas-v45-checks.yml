@@ -1,0 +1,27 @@
+name: RELAS 4.5 radar weather dashboard validation
+on:
+  push:
+    branches:
+      - feat/relas-radar-weather-dashboard-v45
+  pull_request:
+    branches:
+      - feat/navigation-v3-phase-b1
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate JavaScript source
+        run: |
+          node --check app/app.js
+          node --check app/boot.js
+          node --check app/ui/forecast.js
+          node --check app/ui/radar-audit.js
+      - name: Execute radar and navigation tests
+        run: |
+          node --test tests/radar-audit.test.cjs tests/navigation-arrival.test.js tests/drive-simulator.test.cjs
