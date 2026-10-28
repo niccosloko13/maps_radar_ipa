@@ -92,3 +92,22 @@
  .driving .drive-bottom .eta span{white-space:normal;overflow-wrap:anywhere}
  .driving .alert{max-width:none;width:calc(100% - 24px)}
 }
+
+/* RELAS Motion V4.4 — navigation with clearer turn hierarchy */
+.driving .maneuver{background:#192c3c;border:1px solid #ffffff20;box-shadow:0 13px 34px #0a1c2e43}
+.driving .maneuver>b{border-radius:15px;background:#ffffff15;padding:4px;min-height:58px}
+.driving .maneuver h2{color:#f5f7fa;line-height:1.25}
+.driving .maneuver small{color:#fff;line-height:1.06}
+.driving .alert{background:#fff9ec;border-color:#e8bb69}
+.driving .alert[data-overspeed=true],.driving .alert[data-intensity=strong]{background:#fff0ed;border-color:#c84d41}
+.driving .drive-bottom{background:#fff;border:1px solid #e1e6eb}
+.driving .drive-bottom .eta strong{letter-spacing:-.5px}
+.driving .velocity{border-right:1px solid #dce3e8}
+.driving .drive-bottom button{transition:background .16s ease,transform .16s ease}
+.driving .drive-bottom button:active{transform:scale(.96)}
+@media(max-width:600px){
+ .driving .maneuver{border-radius:19px;box-shadow:0 8px 26px #11273935}
+ .driving .maneuver>b{min-height:48px}
+ .driving .alert{border-radius:17px}
+ .driving .drive-bottom{border-radius:20px}
+}
