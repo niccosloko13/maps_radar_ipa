@@ -65,9 +65,9 @@ body.driving .relas-weather-card{display:none}
 @media(max-width:600px){.relas-weather-card{top:auto;bottom:calc(94px + env(safe-area-inset-bottom));left:12px;width:calc(100vw - 24px);max-width:400px;padding:12px 14px;border-radius:18px}.relas-weather-card strong{font-size:18px}.relas-weather-card #relasWeatherRain{font-size:11px}.journey{z-index:6}}
 
 /* RELAS Motion — audit status stays secondary to route planning. */
-.relas-audit-pill{position:fixed;z-index:6;left:20px;top:calc(292px + env(safe-area-inset-top));border-radius:999px;border:1px solid #d8e3e7;background:#fffffff2;box-shadow:0 6px 20px #19334218;padding:10px 15px;min-height:44px;color:#314c5b;font-size:11px;letter-spacing:.15px;font-weight:750;backdrop-filter:blur(14px)}
+.relas-audit-pill{position:fixed;z-index:6;left:20px;top:calc(316px + env(safe-area-inset-top));border-radius:999px;border:1px solid #d8e3e7;background:#fffffff2;box-shadow:0 6px 20px #19334218;padding:10px 15px;min-height:44px;color:#314c5b;font-size:11px;letter-spacing:.15px;font-weight:750;backdrop-filter:blur(14px)}
 .relas-audit-pill:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#6d59d8;margin-right:7px}
 .relas-audit-pill:focus-visible{outline:3px solid #7863e5;outline-offset:2px}
 body:not(.light) .relas-audit-pill{background:#192c3bf2;border-color:#3b5564;color:#e9f4fb}
 body.driving .relas-audit-pill{display:none}
-@media(max-width:600px){.relas-audit-pill{left:12px;top:auto;bottom:calc(188px + env(safe-area-inset-bottom));font-size:11px;min-height:42px;padding:9px 13px}}
+@media(max-width:600px){.relas-audit-pill{left:12px;top:auto;bottom:calc(230px + env(safe-area-inset-bottom));font-size:11px;min-height:42px;padding:9px 13px}}
