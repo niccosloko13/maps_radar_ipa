@@ -2103,14 +2103,20 @@ class H(SimpleHTTPRequestHandler):
     qq=(q.get('q') or [''])[0];lat=(q.get('lat') or [None])[0];lon=(q.get('lon') or [None])[0]
     lat=float(lat) if lat not in (None,'') else None;lon=float(lon) if lon not in (None,'') else None
     return self.js({'items':autocomplete_text(qq,lat,lon,7,(q.get('submitted') or ['0'])[0]=='1')})
-   except Exception as e:return self.js({'items':[],'error':f'{type(e).__name__}: {e}'})
+   except Exception as e:
+    __import__('logging').getLogger('relas.api').error('autocomplete_failed error_type=%s',type(e).__name__)
+    return self.js({'items':[],'error':'Autocomplete temporarily unavailable'},503)
   if p.path=='/api/geocode':
    try:return self.js({'items':geocode_text((q.get('q') or [''])[0],5)})
-   except Exception as e:return self.js({'items':[],'error':f'{type(e).__name__}: {e}'})
+   except Exception as e:
+    __import__('logging').getLogger('relas.api').error('geocode_failed error_type=%s',type(e).__name__)
+    return self.js({'items':[],'error':'Geocoding temporarily unavailable'},503)
   if p.path=='/api/route':
    try:
     vals=[float((q.get(k) or [''])[0]) for k in ('flat','flon','tlat','tlon')];return self.js(build_route(*vals))
-   except Exception as e:return self.js({'error':f'{type(e).__name__}: {e}'})
+   except Exception as e:
+    __import__('logging').getLogger('relas.api').error('route_failed error_type=%s',type(e).__name__)
+    return self.js({'error':'Route calculation temporarily unavailable'},503)
   if p.path=='/api/sync/praia-grande':return self.js(seed_praia_grande(True))
   if p.path=='/api/sync/santos':return self.js(seed_santos(True))
   if p.path=='/api/radars':return self.js({'items':get_radars(False),'demo':False})

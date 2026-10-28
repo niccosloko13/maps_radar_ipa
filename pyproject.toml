@@ -16,3 +16,6 @@ dev = ["httpx==0.28.1"]
 
 [tool.vercel]
 entrypoint = "server:app"
+
+[tool.pytest.ini_options]
+norecursedirs = ["artifacts", ".git", ".vercel", "node_modules"]

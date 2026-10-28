@@ -74,6 +74,23 @@ class RuntimeTests(unittest.TestCase):
             self.assertFalse(result['ok'])
             self.assertIn('DATABASE_URL is required',result['configuration_errors'])
 
+    def test_public_api_failures_do_not_expose_internal_errors(self):
+        secret='postgresql://private-user:private-password@private-host/neondb'
+        with patch.dict(os.environ,{'DATABASE_BACKEND':'sqlite','RELAS_ENV':'development'}):
+            with patch.object(server,'autocomplete_text',side_effect=RuntimeError(secret)), \
+                 patch.object(server,'geocode_text',side_effect=RuntimeError(secret)), \
+                 patch.object(server,'build_route',side_effect=RuntimeError(secret)):
+                with TestClient(server.app) as client:
+                    requests=(
+                        client.get('/api/autocomplete?q=Paulista'),
+                        client.get('/api/geocode?q=Paulista'),
+                        client.get('/api/route?flat=-23.56&flon=-46.65&tlat=-23.55&tlon=-46.63'),
+                    )
+                for response in requests:
+                    self.assertEqual(response.status_code,503)
+                    self.assertNotIn('private-password',response.text)
+                    self.assertNotIn('private-host',response.text)
+
     def test_hosted_import_has_no_database_or_filesystem_initialization(self):
         with tempfile.TemporaryDirectory() as directory:
             target=Path(directory)/'must-not-be-created'
