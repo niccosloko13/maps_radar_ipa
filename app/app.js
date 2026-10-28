@@ -7,6 +7,13 @@ S.mapReady=new Promise(resolve=>{S.resolveMapReady=resolve});
 try{const stored=JSON.parse(localStorage.getItem('relas-layers'));if(Array.isArray(stored))S.enabled=new Set(stored.filter(k=>k in UI.categories));if(localStorage.getItem('relas-layers-schema')!=='3'){for(const k of ['works','accident'])S.enabled.add(k);localStorage.setItem('relas-layers-schema','3')}}catch{}
 const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function api(url,data){const r=await fetch(url,data?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}:{});const j=await r.json();if(!r.ok||j.error)throw Error(j.error||'Falha de conexão');return j}
+const radarAuditButton=$('#radarAuditOpen');
+if(radarAuditButton)radarAuditButton.onclick=()=>{
+ const audit=window.RelasRadarAudit?.analyze(S.catalog||[]);
+ if(!audit){toast('Auditoria indisponível');return}
+ const line=(label,n)=>'<div class="relas-forecast-row"><span>'+safe(label)+'</span><strong>'+safe(n)+'</strong></div>';
+ sheet('QUALIDADE DOS RADARES','<h2>Auditoria da região visível</h2><p class="subtitle">Contagem apenas dos radares retornados pelo mapa neste zoom. Não é o inventário estadual nem comprova atividade operacional.</p>'+line('Radares retornados',audit.total)+line('Fonte oficial declarada',audit.official)+line('Confirmados',audit.confirmed)+line('Velocidade cadastrada',audit.withSpeed)+line('Sentido cadastrado',audit.withDirection)+line('Data de referência disponível',audit.withDate)+line('Sem data verificável',audit.unknownDate)+line('Data superior a 180 dias',audit.stale)+line('Possíveis duplicações',audit.possibleDuplicates)+line('Coordenadas inválidas',audit.invalidCoordinates)+'<p class="subtitle">Datas de importação não comprovam que um radar esteja ativo. Duplicações são apenas indícios geográficos e precisam de revisão manual.</p>');
+};
 function toast(t){$('#toast').textContent=t;$('#toast').classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').classList.remove('show'),4000)}
 function sheet(title,html){$('#sheetLabel').textContent=title;$('#sheetContent').innerHTML=html;if(!$('#sheet').open)$('#sheet').showModal()}
 $('#closeSheet').onclick=()=>$('#sheet').close();$('#sheet').onclick=e=>{if(e.target===$('#sheet'))$('#sheet').close()};
