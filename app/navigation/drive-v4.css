@@ -52,3 +52,6 @@
  .driving .drive-bottom button{flex:0 0 44px}
 }
 @media(prefers-reduced-motion:reduce){.driving .maneuver,.driving .alert,.driving .drive-bottom{transition:none!important}}
+
+/* V4.1: prioritize readable guidance and tap targets on small screens. */
+@media(max-width:600px){.driving .maneuver h2{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}.driving .drive-bottom .eta strong{font-variant-numeric:tabular-nums}.driving .drive-bottom button{min-height:48px;min-width:44px}.driving .alert[data-overspeed=true]{border-left:5px solid #bf443a;background:#fff1ef}}
