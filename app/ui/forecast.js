@@ -7,7 +7,7 @@ async function forecast(lat,lon){
  if(!Number.isFinite(a)||!Number.isFinite(b)||a< -34||a> -18||b< -55||b> -43)throw Error('Localização fora da cobertura');
  const key=a.toFixed(2)+','+b.toFixed(2),old=cache.get(key);
  if(old&&Date.now()-old.time<600000)return old.data;
- const url='https://api.open-meteo.com/v1/forecast?latitude='+encodeURIComponent(a.toFixed(4))+'&longitude='+encodeURIComponent(b.toFixed(4))+'&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m&hourly=precipitation_probability,temperature_2m,precipitation&forecast_hours=6&timezone=America%2FSao_Paulo';
+ const url='https://api.open-meteo.com/v1/forecast?latitude='+encodeURIComponent(a.toFixed(2))+'&longitude='+encodeURIComponent(b.toFixed(2))+'&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m&hourly=precipitation_probability,temperature_2m,precipitation&forecast_hours=6&timezone=America%2FSao_Paulo';
  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),9000);
  try{
  const response=await fetch(url,{signal:controller.signal,cache:'no-store'});
