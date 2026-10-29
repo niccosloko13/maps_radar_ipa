@@ -106,6 +106,15 @@ def search_address(query,http_request,ua,near_lat=None,near_lon=None,limit=7,sub
         collect('structured',{**common,**{k:v for k,v in parsed.items() if k not in {'raw','query'}}},'photon_structured')
     if not items or (parsed.get('housenumber') and not any(i['match_quality']=='house_number' for i in items)):
         collect('api',{**common,'q':parsed['query']},'photon')
+    # House-number search can make Photon return unrelated streets matching only
+    # the number. Try a street-only request, then strictly reject wrong street names.
+    if parsed.get('housenumber') and parsed.get('street') and not any(
+        folded((i['address'].get('street') or i['address'].get('name'))) == folded(parsed['street'])
+        for i in items
+    ):
+        collect('api',{**common,'q':parsed['street']},'photon_street_fallback')
+    if parsed.get('street') and parsed.get('housenumber'):
+        items=[i for i in items if folded(i['address'].get('street') or i['address'].get('name'))==folded(parsed['street'])]
     def rank(r):
         p=r['address'];street=folded(p.get('street') or p.get('name'));wanted_street=folded(parsed.get('street'));city=folded(p.get('city'));wanted_city=folded(parsed.get('city'));number=folded(p.get('housenumber'));wanted_number=folded(parsed.get('housenumber'));score=0
         # Exact street + city + number has a higher, explainable score than a
