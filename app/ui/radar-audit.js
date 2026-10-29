@@ -13,7 +13,8 @@
    if(p.trust==='official')out.official++;else if(p.trust==='confirmed')out.confirmed++;else if(p.trust==='community')out.community++;else out.other++;
    if(Number(p.speed_limit)>0&&Number(p.speed_limit)<=140)out.withSpeed++;
    if(Number(p.direction_type)>0&&Number.isFinite(Number(p.direction)))out.withDirection++;
-   const age=days(p.source_date||p.last_seen||p.updated_at||p.imported_at,now);
+   // Source dates are evidence dates; importing a row is NOT a fresh physical verification.
+   const age=days(p.source_date||p.verified_at||p.last_confirmed_at,now);
    if(age===null||age<0)out.unknownDate++;else{out.withDate++;if(age>180)out.stale++}
    const coords=f.geometry?.coordinates;
    if(!Array.isArray(coords)||!Number.isFinite(coords[0])||!Number.isFinite(coords[1])||coords[0]<-55||coords[0]>-43||coords[1]<-27||coords[1]>-18){out.invalidCoordinates++;continue}
