@@ -24,8 +24,9 @@ jobs:
           node --check app/ui/radar-audit.js
       - name: Check offline audit script syntax
         run: |
-          python -m py_compile tools/radar_quality_report.py
+          python -m py_compile tools/radar_quality_report.py tools/stage_external_sources.py
           python -m unittest discover -s tests -p 'test_relas_motion_icons.py'
+          python -m unittest discover -s tests -p 'test_stage_external_sources.py'
       - name: Execute radar and navigation tests
         run: |
           node --test tests/radar-audit.test.cjs tests/forecast.test.cjs tests/navigation-arrival.test.js tests/drive-simulator.test.cjs
