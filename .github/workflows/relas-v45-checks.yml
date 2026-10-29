@@ -18,6 +18,10 @@ jobs:
           node-version: '22'
       - name: Validate JavaScript source
         run: |
+          node --check app/admin.js
+          node --check app/community-admin.js
+          node --check app/road-admin.js
+          node --check app/admin-command-health.js
           node --check app/app.js
           node --check app/boot.js
           node --check app/ui/forecast.js
