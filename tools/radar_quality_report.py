@@ -19,7 +19,21 @@ def report():
         'suspicious_coordinates':'outside approximate Sao Paulo state envelope; requires manual investigation',
         'source_sync':'last registered attempt; not proof that external data is complete'
     }}
-    with database.connect() as c:
+    if database.backend()=='sqlite':
+        import os
+        import sqlite3
+        from contextlib import closing
+        local=os.environ.get('LOCALAPPDATA')
+        data_dir=Path(os.environ['RADAR_DATA_DIR']).expanduser() if os.environ.get('RADAR_DATA_DIR') else (Path(local)/'RadarSP'/'data' if local else ROOT/'user-data')
+        path=data_dir/'radar.db'
+        if not path.is_file():
+            raise FileNotFoundError('SQLite database not found: check RADAR_DATA_DIR')
+        connection=sqlite3.connect('file:'+str(path.resolve())+'?mode=ro',uri=True)
+        connection.row_factory=sqlite3.Row
+    else:
+        from contextlib import closing
+        connection=database.connect()
+    with closing(connection) as c:
         result['by_source']=[dict(r) for r in c.execute("""
             SELECT source, COUNT(*) AS total,
             SUM(CASE WHEN status='active' THEN 1 ELSE 0 END) AS marked_active,
