@@ -858,7 +858,7 @@ def autocomplete_text(q,near_lat=None,near_lon=None,limit=7,submitted=False):
  if len(q)<3:return []
  # Reuse existing persistent runtime cache in hosted mode, no schema change.
  cache_path=DATA_DIR/'navigation_search_cache.json';cache=_load_json(cache_path,{})
- key=json.dumps(['navigation-v2',q.casefold(),round(near_lat,2) if near_lat is not None and math.isfinite(near_lat) else None,round(near_lon,2) if near_lon is not None and math.isfinite(near_lon) else None,bool(submitted)],ensure_ascii=False)
+ key=json.dumps(['navigation-v3-street-verified',q.casefold(),round(near_lat,2) if near_lat is not None and math.isfinite(near_lat) else None,round(near_lon,2) if near_lon is not None and math.isfinite(near_lon) else None,bool(submitted)],ensure_ascii=False)
  entry=cache.get(key)
  if entry and time.time()-entry['at']<(300 if entry['items'] else 30):return entry['items'][:limit]
  items=search_address(q,http_request,UA,near_lat,near_lon,limit,submitted)
