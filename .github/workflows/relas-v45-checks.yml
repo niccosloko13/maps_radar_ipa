@@ -21,6 +21,7 @@ jobs:
           node --check app/admin.js
           node --check app/community-admin.js
           node --check app/road-admin.js
+          node --check app/admin-source-audit.js
           node --check app/admin-command-health.js
           node --check app/app.js
           node --check app/boot.js
