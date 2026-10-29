@@ -106,6 +106,15 @@ def search_address(query,http_request,ua,near_lat=None,near_lon=None,limit=7,sub
         collect('structured',{**common,**{k:v for k,v in parsed.items() if k not in {'raw','query'}}},'photon_structured')
     if not items or (parsed.get('housenumber') and not any(i['match_quality']=='house_number' for i in items)):
         collect('api',{**common,'q':parsed['query']},'photon')
+    # House-number search can make Photon return unrelated streets matching only
+    # the number. Try a street-only request, then strictly reject wrong street names.
+    if parsed.get('housenumber') and parsed.get('street') and not any(
+        folded((i['address'].get('street') or i['address'].get('name'))) == folded(parsed['street'])
+        for i in items
+    ):
+        collect('api',{**common,'q':parsed['street']},'photon_street_fallback')
+    if parsed.get('street') and parsed.get('housenumber'):
+        items=[i for i in items if folded(i['address'].get('street') or i['address'].get('name'))==folded(parsed['street'])]
     def rank(r):
         p=r['address'];street=folded(p.get('street') or p.get('name'));wanted_street=folded(parsed.get('street'));city=folded(p.get('city'));wanted_city=folded(parsed.get('city'));number=folded(p.get('housenumber'));wanted_number=folded(parsed.get('housenumber'));score=0
         # Exact street + city + number has a higher, explainable score than a
@@ -114,6 +123,15 @@ def search_address(query,http_request,ua,near_lat=None,near_lon=None,limit=7,sub
         score+=60 if wanted_city and city==wanted_city else -120 if wanted_city else 0
         score+=80 if wanted_number and number==wanted_number else 15 if wanted_number and street==wanted_street else 0
         if parsed.get('postcode') and re.sub(r'\D','',str(p.get('postcode','')))==re.sub(r'\D','',parsed['postcode']):score+=30
+        # City omitted: place verified nearby candidates ahead of namesake streets
+        # in distant SP municipalities (e.g. Rua Amparo in Amparo versus SBC).
+        # A typed city remains authoritative: never bias against intentional travel.
+        if not wanted_city and r['distance_m'] is not None:
+            d=r['distance_m']
+            if d>25000:score-=140
+            elif d>12000:score-=80
+            elif d<=4000:score+=85
+            elif d<=12000:score+=35
         return (-score,r['distance_m'] if r['distance_m'] is not None else 1e12,r['label'])
     return sorted(items,key=rank)[:max(1,min(8,int(limit)))]
 

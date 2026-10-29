@@ -7,6 +7,10 @@ from datetime import datetime, timezone
 TYPES={1:'fixed',2:'signal_radar',3:'red_light',5:'mobile',7:'police',8:'bump',14:'toll'}
 LABELS={'fixed':'Radar fixo','signal_radar':'Radar + avanço de sinal','red_light':'Câmera de avanço','mobile':'Fiscalização reportada','police':'Fiscalização','bump':'Lombada','toll':'Pedágio','signal':'Semáforo','other':'Objeto viário'}
 def now():return datetime.now(timezone.utc).isoformat()
+# Observational reports are short-lived; fixed infrastructure needs separate review.
+REPORT_TTL_SECONDS={'mobile':1200,'police':1200,'accident':3600,'stopped':1200,'obstacle':1800,'flood':3600,'closure':7200,'works':7200,'congestion':1800,'animal':1200,'pothole':7200,'broken_signal':3600,'fixed':3600,'bump':3600,'other':1800}
+def report_ttl(kind):return REPORT_TTL_SECONDS.get(kind,1800)
+
 @contextmanager
 def transaction(s):
  """SQLite's connection context commits but does not close: release viewport handles."""
@@ -167,7 +171,7 @@ def post(s,handler,path,data):
   city=boundaries(str(s.ROOT)).city(x,y)
   if not city:raise ValueError('Reporte disponível somente em SP')
   stamp=now();rid='report-'+hashlib.sha256(f'{handler.client_address[0]}:{x:.4f}:{y:.4f}:{kind}:{int(time.time()/300)}'.encode()).hexdigest()[:24]
-  with transaction(s) as c:c.execute('INSERT INTO map_points(id,longitude,latitude,kind,source,source_type,ingested_by,imported_at,municipality,trust,updated_at,expires_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(id) DO NOTHING',(rid,x,y,kind if kind in LABELS else 'other','public_report','recent','public_report',stamp,city,'recent',stamp,time.time()+7200))
+  with transaction(s) as c:c.execute('INSERT INTO map_points(id,longitude,latitude,kind,source,source_type,ingested_by,imported_at,municipality,trust,updated_at,expires_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(id) DO NOTHING',(rid,x,y,kind if kind in LABELS else 'other','public_report','recent','public_report',stamp,city,'recent',stamp,time.time()+report_ttl(kind)))
   with transaction(s) as c:c.execute('UPDATE map_points SET name=?,report_kind=?,raw_json=? WHERE id=?',(kind,kind,json.dumps(data),rid))
   return {'ok':True,'id':rid}
  if path=='/api/map/feedback':
