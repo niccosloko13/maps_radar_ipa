@@ -14,4 +14,9 @@ class TestAddressProximity(unittest.TestCase):
   self.assertGreaterEqual(len(results),2)
   self.assertIn("São Bernardo",results[0]["label"])
   self.assertNotEqual(results[0]["address_state"],"EXACT_ADDRESS")
+ def test_rejects_unrelated_streets_even_if_house_number_matches(self):
+  def fake(url,**kwargs):
+   result=[{"geometry":{"coordinates":[-46.54,-23.71]},"properties":{"street":"Rua Ester Maccagnan Mancuso","housenumber":"110","city":"São Bernardo do Campo","state":"São Paulo","countrycode":"BR"}}]
+   return json.dumps({"features":result}).encode(),None,None,None
+  self.assertEqual(search_address("Rua Amparo 110",fake,"RELAS-test",near_lat=-23.71,near_lon=-46.54,submitted=True),[])
 if __name__=="__main__":unittest.main()
