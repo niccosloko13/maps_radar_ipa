@@ -114,6 +114,15 @@ def search_address(query,http_request,ua,near_lat=None,near_lon=None,limit=7,sub
         score+=60 if wanted_city and city==wanted_city else -120 if wanted_city else 0
         score+=80 if wanted_number and number==wanted_number else 15 if wanted_number and street==wanted_street else 0
         if parsed.get('postcode') and re.sub(r'\D','',str(p.get('postcode','')))==re.sub(r'\D','',parsed['postcode']):score+=30
+        # City omitted: place verified nearby candidates ahead of namesake streets
+        # in distant SP municipalities (e.g. Rua Amparo in Amparo versus SBC).
+        # A typed city remains authoritative: never bias against intentional travel.
+        if not wanted_city and r['distance_m'] is not None:
+            d=r['distance_m']
+            if d>25000:score-=140
+            elif d>12000:score-=80
+            elif d<=4000:score+=85
+            elif d<=12000:score+=35
         return (-score,r['distance_m'] if r['distance_m'] is not None else 1e12,r['label'])
     return sorted(items,key=rank)[:max(1,min(8,int(limit)))]
 
