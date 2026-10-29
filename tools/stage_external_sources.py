@@ -3,7 +3,7 @@
 Usage: python tools/stage_external_sources.py --output artifacts/staging/external-sp.json
        python tools/stage_external_sources.py --pardal-file /path/file.csv --freeflow-file /path/file.csv --offline
 """
-import argparse,csv,io,json,urllib.request,datetime,hashlib,pathlib
+import argparse,csv,io,json,urllib.request,urllib.parse,datetime,hashlib,pathlib
 PARDAL="https://raw.githubusercontent.com/Murkiriel/pardal/main/estados/SP/radares.csv"
 FREEFLOW="https://raw.githubusercontent.com/Sem-Parar/SEM-PARAR-FREE-FLOW/main/dados/porticos-free-flow.csv"
 BUNDA="https://servidor3.lucas.inf.br/openclaw/radar/api.pse"
@@ -37,7 +37,7 @@ def freeflow(rows):
   out.append({"external_key":hashlib.sha256(("freeflow|"+row.get("sigla","")+"|"+row.get("km","")+"|"+row.get("municipio","")+"|"+row.get("sentido","")).encode()).hexdigest()[:20],"kind":"FREE_FLOW_GANTRY","municipality":row.get("municipio"),"road":row.get("sigla"),"km_text":row.get("km"),"direction_text":row.get("sentido"),"operator":row.get("concessionaria"),"upstream_status":row.get("status"),"upstream_updated_at":row.get("atualizado_em"),"lat":None,"lon":None,"geocode_required":True,"status":"candidate_unverified","source_id":"github_semparar_freeflow","license":"CC BY 4.0; attribution required"})
  return out
 def main():
- ap=argparse.ArgumentParser();ap.add_argument("--output",required=True);ap.add_argument("--offline",action="store_true");ap.add_argument("--pardal-file");ap.add_argument("--freeflow-file");ap.add_argument("--bunda-json");args=ap.parse_args()
+ ap=argparse.ArgumentParser();ap.add_argument("--output",required=True);ap.add_argument("--offline",action="store_true");ap.add_argument("--pardal-file");ap.add_argument("--freeflow-file");ap.add_argument("--bunda-json");ap.add_argument("--bunda-sample",action="store_true",help="fetch a single bounded SP API page for schema review");args=ap.parse_args()
  if args.offline and not (args.pardal_file and args.freeflow_file):ap.error("--offline requires two local CSV files")
  def read(path,url):
   return pathlib.Path(path).read_text(encoding="utf-8-sig") if path else get(url)
@@ -48,6 +48,14 @@ def main():
   except Exception as e:data["sources"][name]={"fetched":False,"error_type":type(e).__name__};data["warnings"].append(name+" unavailable; no inferred data")
  # Bunda de Urso API is separate; no automated bulk import until response contract and usage policy are reviewed.
  data["sources"]["bunda_de_urso"]={"fetched":False,"endpoint":BUNDA,"mode":"manual API evaluation required","reason":"No authenticated permission/validated bulk schema; avoid blind remote harvesting"}
+ if args.bunda_sample and not args.offline:
+  # One page, state filter, no crawling. API's payload is intentionally not merged.
+  try:
+   url=BUNDA+"?"+urllib.parse.urlencode({"rota":"/api/v1/radares/busca","uf":"SP","limite":"100","formato":"json"})
+   payload=json.loads(get(url))
+   points=payload.get("resultado",{}).get("pontos",[])
+   data["sources"]["bunda_de_urso"].update({"fetched":True,"sample_count":len(points),"mode":"schema_review_only","sample":points[:3],"warning":"Requires source and redistribution review; no automatic production merge"})
+  except Exception as e:data["sources"]["bunda_de_urso"].update({"fetched":False,"error_type":type(e).__name__})
  if args.bunda_json:
   try:
    parsed=json.loads(pathlib.Path(args.bunda_json).read_text(encoding="utf-8"))
